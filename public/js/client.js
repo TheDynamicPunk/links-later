@@ -53,7 +53,7 @@ function saveLocalLinks(params) {
 }
 
 document.querySelector('.add-links').addEventListener('click', async () => {
-    let linksInput = document.querySelector('#links-input span');
+    let linksInput = document.querySelector('#links-input') || document.querySelector('#links-input span');
 
     if(linksInput != null && linksInput.textContent != '')
     {
