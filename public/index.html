@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <title>Links Later</title>
+</head>
+<body>
+    <section id="input-section">
+        <h1>Paste links to track here, separated by comma...</h1>
+        <textarea placeholder="Resize handle given at bottom-right" id="links" rows="1"></textarea>
+        <div class="btns">
+            <button>Add <i class="fas fa-plus"></i></button>
+            <button onclick="clearInput()">Clear</button>
+        </div>
+        <div class="loader" style="opacity: 0;">
+            <div class="spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="collection-section">
+        <h2 style="text-align: center;">Your cached links</h2>
+        <p style="text-align: center; padding-top: 2em; font-size: 1.2rem;" class="no-links-prompt">No links to show... Add some links above to see them here!</p>
+        <div class="collection">
+            <!-- <div class="pane">
+                <img src="assets/sample.jpg" alt="link-preview">
+                <h3 class="title">Graphs</h3>
+                <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim, velit cupiditate sapiente ducimus expedita, laboriosam amet at sint quibusdam harum corrupti soluta corporis voluptatum, impedit voluptatem. Perspiciatis autem pariatur iusto?</p>
+                <a class="btn" href="">Open</a>
+                <button id="deletePane" onclick="deletePane(this)"><i class="fas fa-trash"></i></button>
+            </div> -->
+        </div>
+    </section>
+</body>
+<script src="js/client.js"></script>
+</html>
