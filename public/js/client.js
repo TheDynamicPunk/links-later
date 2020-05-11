@@ -84,6 +84,7 @@ document.querySelector('.add-links').addEventListener('click', async () => {
 
         saveLocalLinks(scrapedData);
         isCollectionEmpty();
+        clearInput();
     }
     else {
         let quotes = ['Add something here!', 'Copy and paste something 😅', 'Paste links here to add!', 'Feels empty in here 😕'];
