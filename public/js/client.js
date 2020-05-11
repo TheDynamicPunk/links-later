@@ -8,21 +8,21 @@ function clearInput() {
 function deletePane(element) {
     let paneLink = element.previousSibling.getAttribute('href');
     element.parentNode.remove();
-    // console.log(paneLink);
-    let data = JSON.parse(localStorage.getItem('previousLinks'));
-    // console.log(data);
+    let data = getSavedLinks();
 
     _.remove(data, item => {
         return item.url === paneLink;
     });
     
-    localStorage.setItem('previousLinks', JSON.stringify(data));
+    localStorage.setItem('savedLinks', JSON.stringify(data));
 
     isCollectionEmpty();
+
+    console.log('Pane deleted...');
 }
 
 function isCollectionEmpty() {
-    if(_.isEmpty(JSON.parse(localStorage.getItem('previousLinks'))))
+    if(_.isEmpty(JSON.parse(localStorage.getItem('savedLinks'))))
     {
         document.querySelector('.no-links-prompt').style.display = '';
         return true;
@@ -34,7 +34,26 @@ function isCollectionEmpty() {
     }
 }
 
-document.querySelector('button').addEventListener('click', async () => {
+function getSavedLinks() {
+    let savedLinks = JSON.parse(localStorage.getItem('savedLinks'));
+
+    if(!savedLinks)
+        localStorage.setItem('savedLinks', '[]');
+        
+    return savedLinks;
+}
+
+function newlyAdded(params) {
+    return _.differenceWith(params, getSavedLinks(), _.isEqual);
+}
+
+function saveLocalLinks(params) {
+    let result = _.unionWith(params, getSavedLinks(), _.isEqual);
+    localStorage.setItem('savedLinks', JSON.stringify(result));   
+    console.log('Local storage updated...')
+}
+
+document.querySelector('.add-links').addEventListener('click', async () => {
     loader.style.opacity = 1;
     let data = {
         links: links.value
@@ -51,21 +70,19 @@ document.querySelector('button').addEventListener('click', async () => {
 
     let scrapedData = await response.json();
 
-    localStorage.setItem('previousLinks', JSON.stringify(scrapedData));
-
-    // console.log(scrapedData);
-    // console.log(localStorage.getItem('previousLinks'));
+    console.log('scrapedData: ',scrapedData);
+    console.log('savedLinks: ', getSavedLinks());
 
     if(response.status === 200)
     {
         loader.style.opacity = 0;
-        createPanes(scrapedData);
+        createPanes(newlyAdded(scrapedData));
     }
+
+    saveLocalLinks(scrapedData);
 });
 
-function createPanes(data) {
-    // console.log(data);
-    
+function createPanes(data) {    
     isCollectionEmpty();
 
     data.forEach( item => {
@@ -120,8 +137,7 @@ function createPanes(data) {
 }
 
 window.onload = () => {
-    let prevData = JSON.parse(localStorage.getItem('previousLinks'));
-    // console.log(_.isEmpty(prevData));
+    let prevData = JSON.parse(localStorage.getItem('savedLinks'));
 
     if(!isCollectionEmpty()) {
         createPanes(prevData);
