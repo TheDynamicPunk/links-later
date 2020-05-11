@@ -1,8 +1,7 @@
 let loader = document.querySelector('.loader');
-let links = document.querySelector('#links');
 
 function clearInput() {
-    document.querySelector('#links').value = '';
+    document.querySelector('#links-input').innerHTML = '';
 }
 
 function deletePane(element) {
@@ -54,11 +53,13 @@ function saveLocalLinks(params) {
 }
 
 document.querySelector('.add-links').addEventListener('click', async () => {
-    if(links.value != '')
+    let linksInput = document.querySelector('#links-input span');
+
+    if(linksInput != null && linksInput.textContent != '')
     {
         loader.style.opacity = 1;
         let data = {
-            links: links.value
+            links: linksInput.textContent
         };
 
         let response = await fetch('/scrapeLinks', {
@@ -82,8 +83,11 @@ document.querySelector('.add-links').addEventListener('click', async () => {
         }
 
         saveLocalLinks(scrapedData);
-    } else {
-        console.log('No links to add!');
+    }
+    else {
+        let quotes = ['Add something here!', 'Copy and paste something 😅', 'Paste links here to add!', 'Feels empty in here 😕'];
+        let randomValue = Math.floor((Math.random() * 4));
+        document.querySelector('#links-input').setAttribute('placeholder', quotes[randomValue]);
     }
 });
 
