@@ -54,32 +54,37 @@ function saveLocalLinks(params) {
 }
 
 document.querySelector('.add-links').addEventListener('click', async () => {
-    loader.style.opacity = 1;
-    let data = {
-        links: links.value
-    };
-
-    let response = await fetch('/scrapeLinks', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Cache-control': 'no-cache'
-        },
-        body: JSON.stringify(data)
-    });
-
-    let scrapedData = await response.json();
-
-    console.log('scrapedData: ',scrapedData);
-    console.log('savedLinks: ', getSavedLinks());
-
-    if(response.status === 200)
+    if(links.value != '')
     {
-        loader.style.opacity = 0;
-        createPanes(newlyAdded(scrapedData));
-    }
+        loader.style.opacity = 1;
+        let data = {
+            links: links.value
+        };
 
-    saveLocalLinks(scrapedData);
+        let response = await fetch('/scrapeLinks', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Cache-control': 'no-cache'
+            },
+            body: JSON.stringify(data)
+        });
+
+        let scrapedData = await response.json();
+
+        console.log('scrapedData: ',scrapedData);
+        console.log('savedLinks: ', getSavedLinks());
+
+        if(response.status === 200)
+        {
+            loader.style.opacity = 0;
+            createPanes(newlyAdded(scrapedData));
+        }
+
+        saveLocalLinks(scrapedData);
+    } else {
+        console.log('No links to add!');
+    }
 });
 
 function createPanes(data) {    
