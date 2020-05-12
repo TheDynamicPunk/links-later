@@ -8,7 +8,7 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    res.sendFile('frontend/index.html', {root: __dirname});
+    res.sendFile('public/linkslater.html', {root: __dirname});
 });
 
 app.post('/scrapeLinks', async (req, res) => {
