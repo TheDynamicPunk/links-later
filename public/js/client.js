@@ -52,6 +52,24 @@ function saveLocalLinks(params) {
     console.log('Local storage updated...')
 }
 
+function sortPanes(sortMethod) {
+    
+    let result;
+
+    if (sortMethod === 'recent') {
+        result = _.orderBy( getSavedLinks(), ['timestamp'], ['desc']);
+    } else if (sortMethod === 'oldest') {
+        result = _.orderBy( getSavedLinks(), ['timestamp'], ['asc']);
+    }
+
+    document.querySelector('.collection').innerHTML = '';
+    createPanes(result);
+}
+
+document.querySelector('select#sortMethods').addEventListener('change', (event) => {
+    sortPanes(document.querySelector('select#sortMethods').value);
+});
+
 document.querySelector('.add-links').addEventListener('click', async () => {
     let linksInput = document.querySelector('#links-input') || document.querySelector('#links-input span');
 
@@ -96,7 +114,7 @@ document.querySelector('.add-links').addEventListener('click', async () => {
 });
 
 function createPanes(data) {  
-    console.log(data);  
+    
     isCollectionEmpty();
 
     data.forEach( item => {
