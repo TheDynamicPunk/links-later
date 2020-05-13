@@ -1,5 +1,9 @@
 let loader = document.querySelector('.loader');
 
+function updateNoOfLinks() {
+    document.querySelector('.number-of-links').textContent = 'Links collected: ' + getSavedLinks().length;
+}
+
 function parseTimestamp(params) {
 
     let linkDate = new Date(params);
@@ -48,7 +52,8 @@ function deletePane(element) {
     });
     
     localStorage.setItem('savedLinks', JSON.stringify(data));
-
+    
+    updateNoOfLinks();
     isCollectionEmpty();
 
     console.log('Pane deleted...');
@@ -81,9 +86,13 @@ function newlyAdded(params) {
 }
 
 function saveLocalLinks(params) {
+    
     let result = _.unionBy(params, getSavedLinks(), 'url');
-    localStorage.setItem('savedLinks', JSON.stringify(result));   
-    console.log('Local storage updated...')
+    localStorage.setItem('savedLinks', JSON.stringify(result));
+    
+    updateNoOfLinks();
+    
+    console.log('Local storage updated...');
 }
 
 function sortPanes(sortMethod) {
@@ -211,6 +220,8 @@ function createPanes(data) {
 
 window.onload = () => {
     let prevData = JSON.parse(localStorage.getItem('savedLinks'));
+
+    updateNoOfLinks();
 
     if(!isCollectionEmpty()) {
         createPanes(prevData);

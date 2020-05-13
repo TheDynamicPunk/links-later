@@ -1,14 +1,67 @@
-<head>
-    <link rel="stylesheet" href="./css/style.css">
-</head>
-<body>
-    <header>
+<style>
+    /* Specifically for navbar */
+    li, a {
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 10%;
+    }
+
+    .nav img {
+        width: 200px;
+    }
+
+    .logo {
+        cursor: pointer;
+    }
+
+    .nav_links {
+        list-style: none;
+    }
+
+    .nav_links li {
+        display: inline-block;
+    }
+
+    .nav_links li a {
+        position: relative;
+        color: black;
+        transition: all 0.3s ease 0s;
+        border-radius: 10px;
+        margin: 0.5em 1em;
+        padding-bottom: 5px;
+        font-size: 1.2rem;
+    }
+
+    .nav_links li a::after {
+        content: '';
+        width: 100%;
+        opacity: 0;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        border-bottom: 4px solid var(--clr1);
+        transform: translateX(-20%);
+        transition: 0.2s ease-in;
+    }
+
+    .nav_links li a:hover::after {
+        opacity: 1;
+        transform: translateX(0%);
+    }
+</style>
+<header>
+    <div class="nav">
         <a href="linkslater.html"><img class="logo" src="./assets/logo.png" alt="logo"></a>
         <ul class="nav_links">
             <li><a href="about.html" id="about-link">About</a></li>
             <li><a href="contact.html">Contact Us</a></li>
             <li><a href="contribute.html">Contribute</a></li>
         </ul>
-    </header>
-    <section id="main"></section>
-</body>
+    </div>
+</header>

@@ -35,7 +35,7 @@
 
     <section id="collection-section">
         <h2 style="text-align: center;">Your cached links</h2>
-        <div class="options d-flex">
+        <div class="options">
             <div class="sort-options">
                 <label for="sortMethods"><b>Sort by: </b></label>
                 <select name="sortMethods" id="sortMethods">
@@ -43,8 +43,9 @@
                     <option value="recent">Recently Added</option>
                     <option value="oldest">Oldest</option>
                 </select>
+                <button class="btn2" onclick="copyAllLinks(this)">Copy all links</button>
             </div>
-            <button class="btn2" onclick="copyAllLinks(this)">Copy all links</button>
+            <div class="number-of-links"></div>
         </div>
         <p style="text-align: center; padding-top: 2em; font-size: 1.2rem;" class="no-links-prompt">No links to show... Add some links above to see them here!</p>
         <div class="collection">
