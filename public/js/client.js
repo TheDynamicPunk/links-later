@@ -114,7 +114,7 @@ document.querySelector('.add-links').addEventListener('click', async () => {
 });
 
 function createPanes(data) {  
-    
+
     isCollectionEmpty();
 
     data.forEach( item => {
@@ -144,7 +144,7 @@ function createPanes(data) {
         let date = new Date(item.timestamp);
         let dateAdded = document.createElement('div');
         dateAdded.id = 'timestamp';
-        dateAdded.textContent = date.toDateString().slice(3).trim();
+        dateAdded.textContent = 'Added on: ' + date.toDateString().slice(3).trim();
 
         //Create new p tag for video description
         let description = document.createElement('p');
