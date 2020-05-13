@@ -1,5 +1,23 @@
 let loader = document.querySelector('.loader');
 
+function copyAllLinks(element) {
+    
+    element.textContent = 'Copied!';
+    let savedLinks = getSavedLinks();
+    let result = '';
+    
+    savedLinks.forEach(item => {
+        result += item.url + ',';
+    });
+
+    result = result.slice(0, result.length-1);
+    navigator.clipboard.writeText(result);
+
+    setTimeout(() => {
+        element.textContent = 'Copy all links';
+    }, 1500);
+}
+
 function clearInput() {
     document.querySelector('#links-input').innerHTML = '';
 }
@@ -97,7 +115,6 @@ document.querySelector('.add-links').addEventListener('click', async () => {
         if(response.status === 200)
         {
             loader.style.opacity = 0;
-            console.log('here');
             
             createPanes(newlyAdded(scrapedData));
         }
@@ -125,7 +142,7 @@ function createPanes(data) {
 
         //Create new anchor tag for video URL
         let videoUrl = document.createElement('a');
-        videoUrl.classList.add('btn');
+        videoUrl.classList.add('btn1');
         videoUrl.setAttribute('href', item.url);
         videoUrl.setAttribute('target', 'blank');
         videoUrl.textContent = 'Open';
@@ -154,6 +171,7 @@ function createPanes(data) {
         //Create new button tag for delete pane
         let delBtn = document.createElement('button');
         delBtn.id = 'deletePane';
+        delBtn.classList.add('btn1');
         delBtn.setAttribute('onClick', 'deletePane(this)');
 
         //Create new fontawesome trash icon for delete button

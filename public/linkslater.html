@@ -19,8 +19,8 @@
         <h1 style="text-align: center;">Paste links to track here, separated by comma 👇🏻</h1>
         <div contenteditable="true" id="links-input" placeholder="Add some links here😉"></div>
         <div class="btns">
-            <button class="add-links">Add <i class="fas fa-plus"></i></button>
-            <button onclick="clearInput()">Clear</button>
+            <button class="add-links btn1">Add <i class="fas fa-plus"></i></button>
+            <button class="btn1" onclick="clearInput()">Clear</button>
         </div>
         <div class="loader" style="opacity: 0;">
             <div class="spinner">
@@ -35,13 +35,16 @@
 
     <section id="collection-section">
         <h2 style="text-align: center;">Your cached links</h2>
-        <div class="sort-options">
-            <label for="sortMethods">Sort by: </label>
-            <select name="sortMethods" id="sortMethods">
-                <option value="select">Select</option>
-                <option value="recent">Recently Added</option>
-                <option value="oldest">Oldest</option>
-            </select>
+        <div class="options d-flex">
+            <div class="sort-options">
+                <label for="sortMethods"><b>Sort by: </b></label>
+                <select name="sortMethods" id="sortMethods">
+                    <option value="select">Select</option>
+                    <option value="recent">Recently Added</option>
+                    <option value="oldest">Oldest</option>
+                </select>
+            </div>
+            <button class="btn2" onclick="copyAllLinks(this)">Copy all links</button>
         </div>
         <p style="text-align: center; padding-top: 2em; font-size: 1.2rem;" class="no-links-prompt">No links to show... Add some links above to see them here!</p>
         <div class="collection">
@@ -51,7 +54,7 @@
                 <div id="timestamp">Added: 28-july 2015</div>
                 <h3 class="title">white sauce pasta की सबसे अनोखी रेसिपी - पास्ता वाइट सॉस में recipe - cookingshooking</h3>
                 <p class="description">Dosto, aaj ke video me banaenge Pasta in White Sauce ki Recipe, ye wali ekdam anokhi recipes hain , indian style me.. Hope aap sabhi ko pasand aae :) Cooking...</p>
-                <a class="btn" href=" https://www.youtube.com/watch?v=BuuY0qiPH4w" target="blank">Open</a>
+                <a class="btn1" href=" https://www.youtube.com/watch?v=BuuY0qiPH4w" target="blank">Open</a>
                 <button id="deletePane" onclick="deletePane(this)"><i class="fas fa-trash"></i></button>
             </div> -->
         </div>
