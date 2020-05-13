@@ -28,10 +28,10 @@ async function previewLinks(links) {
                 console.log(videoThumbnailUrl);
 
                 let data = {
-                    title: title,
-                    videoDescription: videoDescription,
+                    title: title || 'Title -NA-',
+                    videoDescription: videoDescription || 'Link: ' + item,
                     url: item,
-                    thumbnailUrl: videoThumbnailUrl,
+                    thumbnailUrl: videoThumbnailUrl || './assets/image_not_found.svg',
                     timestamp: Date.now()
                 }
 
