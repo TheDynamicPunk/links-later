@@ -43,11 +43,11 @@ function getSavedLinks() {
 }
 
 function newlyAdded(params) {
-    return _.differenceWith(params, getSavedLinks(), _.isEqual);
+    return _.differenceBy(params, getSavedLinks(), 'url');
 }
 
 function saveLocalLinks(params) {
-    let result = _.unionWith(params, getSavedLinks(), _.isEqual);
+    let result = _.unionBy(params, getSavedLinks(), 'url');
     localStorage.setItem('savedLinks', JSON.stringify(result));   
     console.log('Local storage updated...')
 }
@@ -79,6 +79,8 @@ document.querySelector('.add-links').addEventListener('click', async () => {
         if(response.status === 200)
         {
             loader.style.opacity = 0;
+            console.log('here');
+            
             createPanes(newlyAdded(scrapedData));
         }
 
@@ -93,7 +95,8 @@ document.querySelector('.add-links').addEventListener('click', async () => {
     }
 });
 
-function createPanes(data) {    
+function createPanes(data) {  
+    console.log(data);  
     isCollectionEmpty();
 
     data.forEach( item => {
@@ -119,6 +122,12 @@ function createPanes(data) {
         title.classList.add('title');
         title.textContent = item.title;
 
+        //Create new date field
+        let date = new Date(item.timestamp);
+        let dateAdded = document.createElement('div');
+        dateAdded.id = 'timestamp';
+        dateAdded.textContent = date.toDateString().slice(3).trim();
+
         //Create new p tag for video description
         let description = document.createElement('p');
         description.classList.add('description');
@@ -137,6 +146,7 @@ function createPanes(data) {
         //Assemble all parts to make pane div
         delBtn.appendChild(trashIcon);
         newPane.appendChild(previewImg);
+        newPane.appendChild(dateAdded);
         newPane.appendChild(title);
         newPane.appendChild(description);
         newPane.appendChild(videoUrl);

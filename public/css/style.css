@@ -85,7 +85,8 @@ h1 {
 .btn, button {
     text-decoration: none;
     cursor: pointer;
-    margin: 1em 0.5em;
+    margin-left: 0.9em;
+    margin-bottom: 1em;
     padding: 0.5em 1.5em;
     border-radius: 20px;
     background-color: white;
@@ -144,6 +145,15 @@ img {
     padding: 1em 0;
 }
 
+.sort-options {
+    margin-top: 1em;
+    margin-left: 1em;
+}
+
+select {
+    padding: 0.2em 1em;
+}
+
 .collection {
     margin: 2em 1em;
     display: grid;
@@ -153,7 +163,6 @@ img {
 }
 
 .pane {
-    /* background-color: aliceblue; */
     -webkit-box-shadow: 5px 0px 26px 5px rgba(0,0,0,0.43);
     -moz-box-shadow: 5px 0px 26px 5px rgba(0,0,0,0.43);
     box-shadow: 5px 0px 26px 5px rgba(0,0,0,0.43);
@@ -165,7 +174,16 @@ img {
 
 .pane h3 {
     padding: 0 1em;
-    padding-top: 1em;
+}
+
+.pane #timestamp {
+    width: max-content;
+    margin-left: 1.5em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    padding: 0.5em 1em;
+    font-size: 0.7rem;
+    background-color: #b1b1b1;
 }
 
 /* Spinner CSS */

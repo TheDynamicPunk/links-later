@@ -31,7 +31,8 @@ async function previewLinks(links) {
                     title: title,
                     videoDescription: videoDescription,
                     url: item,
-                    thumbnailUrl: videoThumbnailUrl, 
+                    thumbnailUrl: videoThumbnailUrl,
+                    timestamp: Date.now()
                 }
 
                 linkData.push(data);
