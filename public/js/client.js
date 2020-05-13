@@ -1,7 +1,23 @@
 let loader = document.querySelector('.loader');
 
+function parseTimestamp(params) {
+
+    let linkDate = new Date(params);
+    let date = linkDate.toDateString().slice(3).trim();
+    let time = ((linkDate.getHours() < 10) ? '0' : '')
+                + ((linkDate.getHours() > 12) ? (linkDate.getHours() - 12) : linkDate.getHours())
+                + ':'
+                + ((linkDate.getMinutes() < 10) ? '0' : '')
+                + linkDate.getMinutes()
+                + ' '
+                + ((linkDate.getHours() < 12) ? 'AM' : 'PM');
+
+    let dateTime = (date + ' @ ' + time);
+    return dateTime;
+}
+
 function copyAllLinks(element) {
-    
+
     element.textContent = 'Copied!';
     let savedLinks = getSavedLinks();
     let result = '';
@@ -102,7 +118,7 @@ document.querySelector('.add-links').addEventListener('click', async () => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Cache-control': 'no-cache'
+                // 'Cache-control': 'no-cache'
             },
             body: JSON.stringify(data)
         });
@@ -158,10 +174,10 @@ function createPanes(data) {
         title.textContent = item.title;
 
         //Create new date field
-        let date = new Date(item.timestamp);
+        let date = parseTimestamp(item.timestamp);
         let dateAdded = document.createElement('div');
         dateAdded.id = 'timestamp';
-        dateAdded.textContent = 'Added on: ' + date.toDateString().slice(3).trim();
+        dateAdded.textContent = 'Added on: ' + date;
 
         //Create new p tag for video description
         let description = document.createElement('p');
