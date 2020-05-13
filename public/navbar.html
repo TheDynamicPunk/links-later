@@ -12,7 +12,7 @@
         padding: 15px 10%;
     }
 
-    .nav img {
+    .nav #normal-logo {
         width: 200px;
     }
 
@@ -54,10 +54,32 @@
         opacity: 1;
         transform: translateX(0%);
     }
+
+    #small-logo {
+        display: none;
+    }
+
+    @media screen and (max-width: 750px) {
+        #normal-logo {
+            display: none;
+        }
+        #small-logo {
+            display: block;
+        }
+        #small-logo img {
+            width: 48px;
+        }
+        .nav_links li a {
+            font-size: 1rem;
+            padding: 0.5em 0;
+            margin: 0.5em 0.2em;
+        }
+    }
 </style>
 <header>
     <div class="nav">
-        <a href="linkslater.html"><img class="logo" src="./assets/logo.png" alt="logo"></a>
+        <a id="normal-logo" href="linkslater.html"><img class="logo" src="./assets/logo.png" alt="logo"></a>
+        <a id="small-logo" href="linkslater.html"><img class="logo" src="./assets/logo-small.png" alt="logo"></a>
         <ul class="nav_links">
             <li><a href="about.html" id="about-link">About</a></li>
             <li><a href="contact.html">Contact Us</a></li>
