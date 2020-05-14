@@ -79,19 +79,23 @@
         $('.navbar').load('navbar.html');
         $('.footer').load('footer.html');
         
-        setTimeout(() => {
-            console.log(document.cookie);
-            if(document.cookie.indexOf('breakingChanges=true') != -1)
-            {
-                console.log('hello');
-                
-                if(document.cookie.indexOf('seenPopup=true') != -1)
-                {
+        let timerId;
 
-                }
-                else {
-                    $('.modal-wrapper').load('modal.html');
-                    setCookie('seenPopup', 'true', 1);
+        timerId =  setInterval(() => {
+
+            if(document.cookie !== '')
+            {
+                if(document.cookie.indexOf('breakingChanges=true') != -1)
+                {                    
+                    if(document.cookie.indexOf('seenPopup=true') != -1)
+                    {
+                        clearInterval(timerId);
+                    }
+                    else {
+                        $('.modal-wrapper').load('modal.html');
+                        setCookie('seenPopup', 'true', 1);
+                        clearInterval(timerId);
+                    }
                 }
             }
         }, 1000);
