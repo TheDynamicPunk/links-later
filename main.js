@@ -5,6 +5,16 @@ const cookieParser = require('cookie-parser');
 const port =process.env.PORT || 3000;
 const previewLinks = require('./scrape');
 
+//Redirect all requests from http to https
+app.use( function requireHTTPS(req, res, next) {
+    // The 'x-forwarded-proto' check is for Heroku
+    if (!req.secure && req.get('x-forwarded-proto') !== 'https')
+    {
+        return res.redirect('https://' + req.get('host') + req.url);
+    }
+    next();
+});
+
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -28,6 +38,10 @@ app.use(function (req, res, next) {
   next();
 });
 
+//Redirect all requests from http to https
+// app.get('*', (req, res) => {
+//     res.redirect('https://' + req.headers.host + req.url);
+// })
 
 app.get('/', (req, res) => {
     res.sendFile('public/linkslater.html', {root: __dirname});
