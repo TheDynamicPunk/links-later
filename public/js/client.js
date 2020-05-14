@@ -140,7 +140,6 @@ document.querySelector('.add-links').addEventListener('click', async () => {
         if(response.status === 200)
         {
             loader.style.opacity = 0;
-            
             createPanes(newlyAdded(scrapedData));
         }
 
@@ -174,13 +173,13 @@ function createPanes(data) {
 
         //Create new image tag for cached preview image
         let previewImg = document.createElement('img');
-        previewImg.setAttribute('src', item.thumbnailUrl);
+        previewImg.setAttribute('src', item.pagethumbnailUrl);
         previewImg.setAttribute('alt', 'link-preview');
 
         //Create new h3 tag for displaying video title
         let title = document.createElement('h3');
         title.classList.add('title');
-        title.textContent = item.title;
+        title.textContent = item.pageTitle;
 
         //Create new date field
         let date = parseTimestamp(item.timestamp);
@@ -191,7 +190,7 @@ function createPanes(data) {
         //Create new p tag for video description
         let description = document.createElement('p');
         description.classList.add('description');
-        description.textContent = item.videoDescription;
+        description.textContent = item.pageDescription;
 
         //Create new button tag for delete pane
         let delBtn = document.createElement('button');

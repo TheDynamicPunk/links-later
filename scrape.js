@@ -18,20 +18,20 @@ async function previewLinks(links) {
                 });
 
                 let $ = cheerio.load(response);
-                let title = $('meta[property="og:title"]').attr('content');
-                console.log(title);
-                let videoDescription = $('meta[property="og:description"]').attr('content');
-                console.log(videoDescription);
+                let pageTitle = $('meta[property="og:title"]').attr('content');
+                console.log(pageTitle);
+                let pageDescription = $('meta[property="og:description"]').attr('content');
+                console.log(pageDescription);
                 let url = item;
                 console.log(url);
-                let videoThumbnailUrl = $('meta[property="og:image"]').attr('content');
-                console.log(videoThumbnailUrl);
+                let pageThumbnailUrl = $('meta[property="og:image"]').attr('content');
+                console.log(pageThumbnailUrl);
 
                 let data = {
-                    title: title || 'Title -NA-',
-                    videoDescription: videoDescription || 'Link: ' + item,
+                    pageTitle: pageTitle || 'Title -NA-',
+                    pageDescription: pageDescription || 'Link: ' + item,
                     url: item,
-                    thumbnailUrl: videoThumbnailUrl || './assets/image_not_found.svg',
+                    pagethumbnailUrl: pageThumbnailUrl || './assets/image_not_found.svg',
                     timestamp: Date.now()
                 }
 
