@@ -105,6 +105,8 @@ function sortPanes(sortMethod) {
         result = _.orderBy( getSavedLinks(), ['timestamp'], ['desc']);
     } else if (sortMethod === 'oldest') {
         result = _.orderBy( getSavedLinks(), ['timestamp'], ['asc']);
+    } else {
+        return;
     }
 
     document.querySelector('.collection').innerHTML = '';
