@@ -33,7 +33,13 @@ function copyAllLinks(element) {
     });
 
     result = result.slice(0, result.length-1);
-    navigator.clipboard.writeText(result);
+    navigator.clipboard.writeText(result)
+        .then(() => {
+            console.log('All links copied!');
+        })
+        .catch( err => {
+            console.error('Text can\'t be copied!');
+        });
 
     setTimeout(() => {
         element.textContent = previousContent;
