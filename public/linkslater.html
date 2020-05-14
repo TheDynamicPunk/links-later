@@ -14,6 +14,7 @@
     <title>Links Later</title>
 </head>
 <body>
+    <div class="modal-wrapper"></div>
     <div class="navbar"></div>
     <section id="input-section">
         <h1 style="text-align: center;">Paste links to track here, separated by comma 👇🏻</h1>
@@ -64,9 +65,36 @@
     <div class="footer"></div>
 </body>
 <script>
+    function setCookie(name,value,days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+    }
+
     $(document).ready(function() {
         $('.navbar').load('navbar.html');
         $('.footer').load('footer.html');
+        
+        setTimeout(() => {
+            console.log(document.cookie);
+            if(document.cookie.indexOf('breakingChanges=true') != -1)
+            {
+                console.log('hello');
+                
+                if(document.cookie.indexOf('seenPopup=true') != -1)
+                {
+
+                }
+                else {
+                    $('.modal-wrapper').load('modal.html');
+                    setCookie('seenPopup', 'true', 1);
+                }
+            }
+        }, 1000);
     });
 </script>
 <script src="js/client.js"></script>

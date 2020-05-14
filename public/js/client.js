@@ -22,7 +22,9 @@ function parseTimestamp(params) {
 
 function copyAllLinks(element) {
 
+    let previousContent = element.textContent;
     element.textContent = 'Copied!';
+
     let savedLinks = getSavedLinks();
     let result = '';
     
@@ -34,7 +36,7 @@ function copyAllLinks(element) {
     navigator.clipboard.writeText(result);
 
     setTimeout(() => {
-        element.textContent = 'Copy all links';
+        element.textContent = previousContent;
     }, 1500);
 }
 
