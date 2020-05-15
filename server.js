@@ -38,11 +38,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-//Redirect all requests from http to https
-// app.get('*', (req, res) => {
-//     res.redirect('https://' + req.headers.host + req.url);
-// })
-
 app.get('/', (req, res) => {
     res.sendFile('public/linkslater.html', {root: __dirname});
 });
