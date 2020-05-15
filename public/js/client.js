@@ -189,9 +189,12 @@ function createPanes(data) {
         videoUrl.textContent = 'Open';
 
         //Create new image tag for cached preview image
+        let imgContainer = document.createElement('div');
+        imgContainer.classList.add('img-container');
         let previewImg = document.createElement('img');
         previewImg.setAttribute('src', item.pagethumbnailUrl);
         previewImg.setAttribute('alt', 'link-preview');
+        imgContainer.appendChild(previewImg);
 
         //Create new h3 tag for displaying video title
         let title = document.createElement('h3');
@@ -215,6 +218,10 @@ function createPanes(data) {
         delBtn.classList.add('btn1');
         delBtn.setAttribute('onClick', 'deletePane(this)');
 
+        //Create cta-btns class to hold the 2 buttons
+        let cta_btns = document.createElement('div');
+        cta_btns.classList.add('cta-btns');
+
         //Create new fontawesome trash icon for delete button
         let trashIcon = document.createElement('i');
         trashIcon.classList.add('fas');
@@ -222,12 +229,13 @@ function createPanes(data) {
 
         //Assemble all parts to make pane div
         delBtn.appendChild(trashIcon);
-        newPane.appendChild(previewImg);
+        newPane.appendChild(imgContainer);
         newPane.appendChild(dateAdded);
         newPane.appendChild(title);
         newPane.appendChild(description);
-        newPane.appendChild(videoUrl);
-        newPane.appendChild(delBtn);
+        cta_btns.appendChild(videoUrl);
+        cta_btns.appendChild(delBtn);
+        newPane.appendChild(cta_btns);
 
         //Render new element in DOM
         document.querySelector('.collection').prepend(newPane);

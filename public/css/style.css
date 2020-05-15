@@ -149,6 +149,51 @@ select {
     background-color: #b1b1b1;
 }
 
+@media screen and (max-width: 680px) {
+    #links-input {
+        width: 70%;
+    }
+
+    .pane {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        grid-template-rows: auto auto 56px auto;
+        border-radius: 10px;
+    }
+
+    .pane .img-container {
+        grid-row: 1/5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+    .pane .img-container img {
+        object-fit: cover;
+        height: 100%;
+        overflow: hidden;
+        border-bottom-left-radius: 10px;
+        border-top-left-radius: 10px;
+    }
+    .pane h3 {
+        font-size: 1rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .pane p {
+        overflow: hidden;
+        line-height: 1.2;
+    }
+    .btn1 {
+        width: max-content;
+    }
+    .cta-btns {
+        margin-top: 1em;
+    }
+}
+
 /* Spinner CSS */
 .spinner {
     width: 50px;
