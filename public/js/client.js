@@ -223,7 +223,7 @@ function createPanes(data) {
         newPane.appendChild(delBtn);
 
         //Render new element in DOM
-        document.querySelector('.collection').appendChild(newPane);
+        document.querySelector('.collection').prepend(newPane);
     });
 }
 
