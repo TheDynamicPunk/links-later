@@ -108,9 +108,9 @@ function sortPanes(sortMethod) {
     let result;
 
     if (sortMethod === 'recent') {
-        result = _.orderBy( getSavedLinks(), ['timestamp'], ['desc']);
-    } else if (sortMethod === 'oldest') {
         result = _.orderBy( getSavedLinks(), ['timestamp'], ['asc']);
+    } else if (sortMethod === 'oldest') {
+        result = _.orderBy( getSavedLinks(), ['timestamp'], ['desc']);
     } else {
         return;
     }
