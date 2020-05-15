@@ -132,6 +132,7 @@ select {
 
 .pane p {
     padding: 1em;
+    overflow-wrap: break-word;
 }
 
 .pane h3 {
