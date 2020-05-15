@@ -68,8 +68,25 @@
         .line {
             width: 30px;
             height: 3px;
-            background-color: rgb(245, 248, 48);
+            background-color: black;
             margin: 5px;
+            transition: 0.5s ease-out;
+        }
+
+        .changeClr {
+            background-color: #f5f830;
+        }
+
+        .rotateClock {
+            transform: rotate(45deg) translateY(11px);
+        }
+        .rotateCounterClock {
+            transform: rotate(-45deg) translateY(-11px);
+        }
+
+        .moveFade {
+            transform: translateX(-20px);
+            opacity: 0;
         }
 
         nav {
@@ -125,10 +142,19 @@
 </nav>
 <script>
     const hamburger = document.querySelector('.hamburger');
+    const lines = document.querySelectorAll('.line');
     const navLinks = document.querySelector('.nav_links');
     const links = document.querySelectorAll('.nav_links li');
 
     hamburger.addEventListener('click', () => {
+        // lines.classList.toggle('changeClr');
+        lines.forEach( item => {
+            item.classList.toggle('changeClr');
+        });
+
+        lines[0].classList.toggle('rotateClock');
+        lines[1].classList.toggle('moveFade');
+        lines[2].classList.toggle('rotateCounterClock');
         navLinks.classList.toggle('open');
     })
 </script>
