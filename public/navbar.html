@@ -73,6 +73,18 @@
             transition: 0.5s ease-out;
         }
 
+        nav {
+            position: relative;
+        }
+
+        .hamburger {
+            z-index: 2;
+            position: absolute;
+            cursor: pointer;
+            right: 5%;
+        }
+
+        /* To add hamburger menu close and open animation */
         .changeClr {
             background-color: #f5f830;
         }
@@ -83,21 +95,8 @@
         .rotateCounterClock {
             transform: rotate(-45deg) translateY(-11px);
         }
-
         .moveFade {
-            transform: translateX(-20px);
             opacity: 0;
-        }
-
-        nav {
-            position: relative;
-        }
-
-        .hamburger {
-            z-index: 2;
-            position: absolute;
-            cursor: pointer;
-            right: 5%;
         }
 
         .nav_links {
