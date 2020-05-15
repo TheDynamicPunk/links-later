@@ -129,33 +129,40 @@ document.querySelector('.add-links').addEventListener('click', async () => {
     if(linksInput != null && linksInput.textContent != '')
     {
         loader.style.opacity = 1;
+        
         let data = {
             links: linksInput.textContent
         };
 
-        let response = await fetch('/scrapeLinks', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                // 'Cache-control': 'no-cache'
-            },
-            body: JSON.stringify(data)
-        });
+        try {
 
-        let scrapedData = await response.json();
+            let response = await fetch('/scrapeLinks', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // 'Cache-control': 'no-cache'
+                },
+                body: JSON.stringify(data)
+            });
 
-        console.log('scrapedData: ',scrapedData);
-        console.log('savedLinks: ', getSavedLinks());
+            let scrapedData = await response.json();
 
-        if(response.status === 200)
-        {
-            loader.style.opacity = 0;
-            createPanes(newlyAdded(scrapedData));
-        }
+            console.log('scrapedData: ',scrapedData);
+            console.log('savedLinks: ', getSavedLinks());
 
-        saveLocalLinks(scrapedData);
-        isCollectionEmpty();
-        clearInput();
+            if(response.status === 200)
+            {
+                loader.style.opacity = 0;
+                createPanes(newlyAdded(scrapedData));
+            }
+
+            saveLocalLinks(scrapedData);
+            isCollectionEmpty();
+            clearInput();
+
+        } catch { error => {
+            console.log(error);
+        }}
     }
     else {
         let quotes = ['Add something here!', 'Copy and paste something 😅', 'Paste links here to add!', 'Feels empty in here 😕'];
