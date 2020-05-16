@@ -181,6 +181,10 @@ function createPanes(data) {
         let newPane = document.createElement('div');
         newPane.classList.add('pane');
 
+        //Create pane container
+        let paneContainer = document.createElement('div');
+        paneContainer.classList.add('pane-container');
+
         //Create new anchor tag for video URL
         let videoUrl = document.createElement('a');
         videoUrl.classList.add('btn1');
@@ -189,12 +193,9 @@ function createPanes(data) {
         videoUrl.textContent = 'Open';
 
         //Create new image tag for cached preview image
-        let imgContainer = document.createElement('div');
-        imgContainer.classList.add('img-container');
         let previewImg = document.createElement('img');
         previewImg.setAttribute('src', item.pagethumbnailUrl);
         previewImg.setAttribute('alt', 'link-preview');
-        imgContainer.appendChild(previewImg);
 
         //Create new h3 tag for displaying video title
         let title = document.createElement('h3');
@@ -229,13 +230,14 @@ function createPanes(data) {
 
         //Assemble all parts to make pane div
         delBtn.appendChild(trashIcon);
-        newPane.appendChild(imgContainer);
-        newPane.appendChild(dateAdded);
-        newPane.appendChild(title);
-        newPane.appendChild(description);
+        newPane.appendChild(previewImg);
+        paneContainer.appendChild(dateAdded);
+        paneContainer.appendChild(title);
+        paneContainer.appendChild(description);
         cta_btns.appendChild(videoUrl);
         cta_btns.appendChild(delBtn);
-        newPane.appendChild(cta_btns);
+        paneContainer.appendChild(cta_btns);
+        newPane.appendChild(paneContainer);
 
         //Render new element in DOM
         document.querySelector('.collection').prepend(newPane);

@@ -137,6 +137,7 @@ select {
 
 .pane h3 {
     padding: 0 1em;
+    text-transform: capitalize;
 }
 
 .pane #timestamp {
@@ -157,47 +158,68 @@ select {
     #links-input {
         width: 70%;
     }
-
     .pane {
         position: relative;
-        display: grid;
-        grid-template-columns: 1fr 2fr;
-        grid-template-rows: auto auto 56px auto;
-        border-radius: 10px;
-    }
-
-    .pane .img-container {
-        grid-row: 1/5;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-    }
-    .pane .img-container img {
-        object-fit: cover;
-        height: 100%;
+        max-height: 300px;
         overflow: hidden;
-        border-bottom-left-radius: 10px;
-        border-top-left-radius: 10px;
     }
-    .pane #timestamp::before {
+    .pane img {
+        object-fit: contain;
+        /* height: 100%; */
+    }
+    .pane-container {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        color: white;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 50px 20px auto auto;
+        background: linear-gradient(90deg, rgba(9,9,121,0) 0%, rgba(0,0,0,1) 100%);
+    }
+    .pane-container #timestamp {
+        margin-top: auto;
+        margin-left: 45%;
+        height: max-content;
+        background-color: #424242;
+    }
+    .pane-container #timestamp::before {
         content: 'Added: ';
     }
-    .pane h3 {
+    .pane-container h3 {
+        margin-left: 45%;
+        padding-left: 0;
         font-size: 1rem;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
-    .pane p {
+    .pane-container p {
+        position: relative;
+        margin-left: 45%;
+        padding-left: 0;
         overflow: hidden;
         line-height: 1.2;
+        border-bottom-left-radius: 5px;
+    }
+    .pane-container p::after {
+        content: '';
+        position: absolute;
+        top: 85%;
+        left: 0;
+        width: 99%;
+        height: 2em;
+        background: linear-gradient(180deg, #ffffff00 0%, #000000a4 100%); 
     }
     .btn1 {
         width: max-content;
+        margin-left: 0.5em;
     }
     .cta-btns {
         margin-top: 1em;
+        margin-left: 43%;
+        padding-left: 0;
     }
 }
 
