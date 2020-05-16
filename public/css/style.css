@@ -16,6 +16,11 @@
 }
 
 /* mainly for index.html */
+html {
+    position: relative;
+    min-height: 100vh;
+}
+
 i {
     padding-left: 0.2em;
 }
@@ -103,6 +108,10 @@ img {
 
 select {
     padding: 0.2em 0;
+}
+
+#collection-section {
+    margin-bottom: 5em;
 }
 
 .options {
