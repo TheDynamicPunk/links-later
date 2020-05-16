@@ -52,7 +52,7 @@ function clearInput() {
 
 function deletePane(element) {
     let paneLink = element.previousSibling.getAttribute('href');
-    element.parentNode.parentNode.remove();
+    element.parentNode.parentNode.parentNode.remove();
     let data = getSavedLinks();
 
     _.remove(data, item => {
