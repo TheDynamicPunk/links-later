@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const port =process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 const previewLinks = require('./scrape');
 
 //Redirect all requests from http to https
@@ -27,7 +27,7 @@ app.use(function (req, res, next) {
     if (cookie === undefined || cookie === 'false')
     {
         // no: set a new cookie
-        res.cookie('breakingChanges', 'true', { maxAge: 86400000});
+        res.cookie('breakingChanges', process.env.BREAKING_CHANGES, { maxAge: 86400000});
         console.log('Created cookie!');
     }
     else
