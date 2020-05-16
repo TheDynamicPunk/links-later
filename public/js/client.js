@@ -122,6 +122,9 @@ function sortPanes(sortMethod) {
         return;
     }
 
+    localStorage.setItem('savedLinks', JSON.stringify(result));
+    localStorage.setItem('sortPreference', sortMethod);
+
     document.querySelector('.collection').innerHTML = '';
     createPanes(result);
 }
@@ -258,5 +261,10 @@ window.onload = () => {
 
     if(!isCollectionEmpty()) {
         createPanes(prevData);
+    }
+
+    if(localStorage.getItem('sortPreference'))
+    {
+        document.querySelector('select#sortMethods').value = localStorage.getItem('sortPreference');
     }
 }
