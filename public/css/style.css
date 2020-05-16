@@ -199,7 +199,7 @@ select {
         box-shadow: 5px 5px 11px 3px rgba(0,0,0,0.43);
     }
     .pane img {
-        object-fit: fill;
+        object-fit: cover;
         height: 100%;
     }
     .pane-container {
