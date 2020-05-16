@@ -154,6 +154,23 @@ select {
     content: 'Added on: ';
 }
 
+.delete-pane {
+	-webkit-animation: scale-down-center 0.5s ease-out forwards;
+	        animation: scale-down-center 0.5s ease-out forwards;
+}
+
+@-webkit-keyframes scale-down-center {
+    0% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+    }
+    100% {
+      -webkit-transform: scale(0);
+              transform: scale(0);
+    }
+}
+  
+
 @media screen and (max-width: 692px) {
     #links-input {
         width: 70%;
