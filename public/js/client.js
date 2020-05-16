@@ -16,7 +16,7 @@ function parseTimestamp(params) {
                 + ' '
                 + ((linkDate.getHours() < 12) ? 'AM' : 'PM');
 
-    let dateTime = (date + ' @ ' + time);
+    let dateTime = (date + ', ' + time);
     return dateTime;
 }
 
@@ -205,7 +205,7 @@ function createPanes(data) {
         let date = parseTimestamp(item.timestamp);
         let dateAdded = document.createElement('div');
         dateAdded.id = 'timestamp';
-        dateAdded.textContent = 'Added on: ' + date;
+        dateAdded.textContent = date;
 
         //Create new p tag for video description
         let description = document.createElement('p');

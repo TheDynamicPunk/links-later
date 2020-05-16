@@ -149,6 +149,10 @@ select {
     background-color: #b1b1b1;
 }
 
+.pane #timestamp::before {
+    content: 'Added on: ';
+}
+
 @media screen and (max-width: 680px) {
     #links-input {
         width: 70%;
@@ -175,6 +179,9 @@ select {
         overflow: hidden;
         border-bottom-left-radius: 10px;
         border-top-left-radius: 10px;
+    }
+    .pane #timestamp::before {
+        content: 'Added: ';
     }
     .pane h3 {
         font-size: 1rem;
