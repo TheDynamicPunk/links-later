@@ -14,12 +14,70 @@
 <body>
     <div class="navbar"></div>
 
-    <div class="under-construction" style="margin: 0 auto; padding: 5em; width: 60%;">
-        <img src="assets/under-construction.png" alt="under construction">
+    <div class="about">
+        <h1><a class="fun" href="#about">#</a> About This Project</h1>
+        <p>
+            There's always a time when there are just tooooooo many tabs... I know, that pesky bug requires 
+            almost a gazillion tabs worth of StackOverflow, Google Searches and what not. And that's not all! 
+            Internet is a beautiful place (apart from some things... I'm looking at you, nasty ADs). And sometimes 
+            we come across something that's worth looking but we just aren't in the mood or are just too busy with 
+            life.
+        </p>
+        <p>
+            I don't know about you, but this sure was a problem for me 🙄 as I am someone who procrastinates a lot 
+            and sometimes it's just a busy day... But that doesn't mean you should stop exploring the web right? 
+            Prior to this website my only resort was to store links in the open browser tabs and pinning them (as is 
+            supported by firefox) to view later.
+        </p>
+        <p>
+            1 OK! 2 Yeah, fine! Then 3 and then... At the end of the day there were more than 20 tabs sitting there 
+            doing absolutely nothing, waiting for my attention.
+        </p>
+        <p>This caused 2 things:
+            <ul>
+                <li>First, your browser becomes slow as hell as if it wasn't already enough</li>
+                <li>Second, it's an eyesore to look at so much occupied space for nothing!</li>
+            </ul>
+        </p>
+        <p>
+            That's where this beauty comes in! Welcome Links Later!
+            <h4>It's  fast, it's beautiful, It's practical!</h4>
+            <h4>And most importantly it's easy to use!</h4>
+        </p>
+        <p>
+            Just copy and paste the link you like and it's done! It's that simple!
+        </p>
     </div>
 
     <div class="footer"></div>
 </body>
+<style>
+    .about {
+        margin: 1em auto;
+        width: 80%;
+        line-height: 1.4em;
+    }
+    .about h1 {
+        margin-bottom: 0.5em;
+    }
+    .about p {
+        margin-bottom: 1em;
+    }
+    .about ul {
+        margin-left: 2em;
+    }
+    .about h4 {
+        margin-bottom: 0.2em;
+    }
+    .fun {
+        color: #5a5a5a;
+        font-weight: 500;
+        font-style: italic;
+    }
+    .fun:hover {
+        color: #2e2e2e;
+    }
+</style>
 <script>
     $(document).ready(function() {
         $('.navbar').load('navbar.html');
