@@ -120,7 +120,7 @@ select {
     margin: 2em 1em;
     display: grid;
     justify-content: space-between;
-    gap: 3em;
+    gap: 2em;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
@@ -154,18 +154,25 @@ select {
     content: 'Added on: ';
 }
 
-@media screen and (max-width: 680px) {
+@media screen and (max-width: 692px) {
     #links-input {
         width: 70%;
     }
+    .collection {
+        grid-template-columns: 1fr;
+        gap: 1.5em;
+    }
     .pane {
         position: relative;
-        max-height: 300px;
+        max-height: 250px;
         overflow: hidden;
+        -webkit-box-shadow: 5px 5px 11px 3px rgba(0,0,0,0.43);
+        -moz-box-shadow: 5px 5px 11px 3px rgba(0,0,0,0.43);
+        box-shadow: 5px 5px 11px 3px rgba(0,0,0,0.43);
     }
     .pane img {
-        object-fit: contain;
-        /* height: 100%; */
+        object-fit: fill;
+        height: 100%;
     }
     .pane-container {
         position: absolute;
