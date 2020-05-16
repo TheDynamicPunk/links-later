@@ -220,7 +220,7 @@ select {
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: 50px 20px auto auto;
-        background: linear-gradient(90deg, rgba(9,9,121,0) 0%, rgba(0,0,0,1) 100%);
+        background: linear-gradient(120deg, rgba(9,9,121,0) 0%, rgba(0,0,0,1) 90%);
     }
     .pane-container #timestamp {
         margin-top: auto;
