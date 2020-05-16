@@ -164,6 +164,7 @@ select {
     }
     .pane {
         position: relative;
+        min-height: 170px;
         max-height: 250px;
         overflow: hidden;
         -webkit-box-shadow: 5px 5px 11px 3px rgba(0,0,0,0.43);
