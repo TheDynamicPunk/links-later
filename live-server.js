@@ -27,7 +27,7 @@ app.use(function (req, res, next) {
     if (cookie === undefined || cookie === 'false')
     {
         // no: set a new cookie
-        res.cookie('breakingChanges', 'false', { maxAge: 86400000});
+        res.cookie('breakingChanges', process.env.BREAKING_CHANGES, { maxAge: 86400000});
         console.log('Created cookie!');
     }
     else
