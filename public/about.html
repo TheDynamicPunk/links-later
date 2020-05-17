@@ -15,7 +15,7 @@
     <div class="navbar"></div>
 
     <div class="about">
-        <h1><a class="fun" href="#about">#</a> About This Project</h1>
+        <h1>About This Project</h1>
         <p>
             There's always a time when there are just tooooooo many tabs... I know, that pesky bug requires 
             almost a gazillion tabs worth of StackOverflow, Google Searches and what not. And that's not all! 
@@ -40,8 +40,8 @@
             </ul>
         </p>
         <p>
-            That's where this beauty comes in! Welcome Links Later!
-            <h4>It's  fast, it's beautiful, It's practical!</h4>
+            That's where this beauty comes in!<b>  Welcome Links Later! 🎉</b>
+            <h4>It's  fast ⚡, it's beautiful 😍, It's practical! 😉</h4>
             <h4>And most importantly it's easy to use!</h4>
         </p>
         <p>
@@ -59,10 +59,22 @@
         line-height: 1.4em;
     }
     .about h1 {
-        margin-bottom: 0.5em;
+        margin-bottom: 1em;
+        position: relative;
+        z-index: -1;
+    }
+    .about h1::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 300px;
+        transform: translateY(300%);
+        border-bottom: 4px solid #eec643;
     }
     .about p {
         margin-bottom: 1em;
+        font-size: 1.1rem;
     }
     .about ul {
         margin-left: 2em;
@@ -70,13 +82,13 @@
     .about h4 {
         margin-bottom: 0.2em;
     }
-    .fun {
-        color: #5a5a5a;
-        font-weight: 500;
-        font-style: italic;
-    }
-    .fun:hover {
-        color: #2e2e2e;
+    @media screen and (max-width: 390px) {
+        h1 {
+            font-size: 1.7rem;
+        }
+        .about h1::after {
+            width: 260px;
+        }
     }
 </style>
 <script>
