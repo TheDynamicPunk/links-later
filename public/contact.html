@@ -21,12 +21,12 @@
         <h2>Or fill up the form below...</h2>
         <div class="contact-form">
             <form method="POST" action="/submit-form">
-                <label for="query-title">In brief</label>
-                <input name="query-title" type="text" placeholder="Write about your issue in brief" required>
-                <label for="query">Describe your problem</label>
-                <textarea type="text" rows="5" cols="10" name="query" placeholder="Describe your problem in detail" required></textarea>
-                <label for="url-not-working">Any specific url that caused the bug?</label>
-                <input type="url" name="url-not-working" placeholder="Paste the buggy URL">
+                <label for="query-title">Explain in brief</label>
+                <input name="query-title" type="text" placeholder="Issue in brief" required>
+                <label for="query">Describe your problem in detail</label>
+                <textarea type="text" rows="5" cols="10" name="query" placeholder="Describe in detail" required></textarea>
+                <label for="url-not-working">Any specific link that caused the bug?</label>
+                <input type="url" name="url-not-working" placeholder="Paste the buggy link">
                 <div class="form-btns">
                     <input type="reset" value="Reset">
                     <input type="submit" value="Submit">
@@ -50,7 +50,7 @@
         margin: 2em 0;
         display: grid;
         grid-template-rows: auto auto auto auto;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: auto 1fr;
         gap: 1em;
     }
     input[type=text], input[type=url], textarea {
