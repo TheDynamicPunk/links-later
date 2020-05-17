@@ -7,6 +7,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon/favicon-16x16.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="css/style.css">
     <title>Contact Me | Links Later</title>
@@ -14,25 +15,29 @@
 <body>
     <div class="navbar"></div>
 
+    <div class="modal-wrapper" style="display: none;"></div>
+
     <section id="main">
         <h2>Faced a problem?</h2>
-        <h4>No worries! Contacting us is as easy as clicking <a class="btn2" href="mailto:ashutoshgu18@gmail.com"> this! </a></h4>
-        <br>
-        <h2>Or fill up the form below...</h2>
+        <h4>No worries! Contacting us is as easy as filling up this form 😉</h4>
         <div class="contact-form">
-            <form method="POST" action="/submit-form">
-                <label for="query-title">Explain in brief</label>
-                <input name="query-title" type="text" placeholder="Issue in brief" required>
-                <label for="query">Describe your problem in detail</label>
-                <textarea type="text" rows="5" cols="10" name="query" placeholder="Describe in detail" required></textarea>
-                <label for="url-not-working">Any specific link that caused the bug?</label>
-                <input type="url" name="url-not-working" placeholder="Paste the buggy link">
+            <form>
+                <label for="userEmail">Your email<br>(In case we need to contact you)</label>
+                <input type="email" name="userEmail" placeholder="Enter your email id">
+                <label for="issueTitle">Explain in brief</label>
+                <input name="issueTitle" type="text" placeholder="Explain the issue in brief" required>
+                <label for="issue">Describe your problem in detail</label>
+                <textarea type="text" rows="5" cols="10" name="issue" placeholder="Describe the issue in detail" required></textarea>
+                <label for="buggyLink">Any specific link that caused the bug?</label>
+                <input type="url" name="buggyLink" placeholder="Paste the buggy link">
                 <div class="form-btns">
                     <input type="reset" value="Reset">
                     <input type="submit" value="Submit">
                 </div>
             </form>
         </div>
+        <br>
+        <h4>Or... you can mail us <a class="btn2" href="mailto:ashutoshgu18@gmail.com"> here!</a></h4>
     </section>
 
     <div class="footer"></div>
@@ -41,7 +46,8 @@
     #main {
         margin: 1em auto;
         margin-bottom: 5em;
-        width: 60%;
+        width: 70%;
+        max-width: 700px;
     }
     h2,h4 {
         margin-bottom: 10px;
@@ -53,18 +59,19 @@
         grid-template-columns: auto 1fr;
         gap: 1em;
     }
-    input[type=text], input[type=url], textarea {
+    input[type=text], input[type=url], input[type=email], textarea {
         resize: vertical;
         font-size: 0.9rem;
         border-radius: 10px;
         border: none;
         padding: 1em 0.8em;
         box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
+        outline: none;
     }
-    input[type=text]:hover, input[type=url]:hover, textarea:hover {
+    input[type=text]:hover, input[type=url]:hover, input[type=email]:hover, textarea:hover {
         box-shadow:0 0 15px 4px rgba(0,0,0,0.15);
     }
-    input[type=text]:focus, input[type=url]:focus, textarea:focus {
+    input[type=text]:focus, input[type=url]:focus, input[type=email]:focus, textarea:focus {
         box-shadow:0 0 15px 4px rgba(0,0,0,0.15);
     }
     input[type=submit], input[type=reset] {
@@ -90,11 +97,65 @@
         grid-column: 1/3;
         margin: 1em auto;
     }
+
+    @media screen and (max-width: 768px) {
+        #main {
+            width: 85%
+        }
+    }
 </style>
 <script>
     $(document).ready(function() {
         $('.navbar').load('navbar.html');
         $('.footer').load('footer.html');
+        $('.modal-wrapper').load('modal.html');
     });
+
+    function createModal(errors) {
+
+        let modalImg = document.querySelector('.modal .image img');
+        let modalTitle = document.querySelector('.modal-content h1');
+        let modalContent = document.querySelector('.modal-content p');
+        let modalContainer = document.querySelector('.modal-container');
+
+        modalContainer.classList.toggle('close');
+        modalContent.style.textAlign = 'center';
+
+        if(errors.length === 0)
+        {
+            modalImg.setAttribute('src', './assets/relax.svg');
+            modalTitle.textContent = 'Sent!';
+            modalContent.textContent = 'Now sit back and relax! We\'re working hard to address the issue and will get in touch if need be!';
+        } else {
+            const errorMsg = '';
+            modalImg.setAttribute('src', './assets/sad.svg');
+            modalTitle.textContent = 'Error';
+            modalContent.textContent = 'Please provide valid input!';
+        }
+
+        document.querySelector('.modal-wrapper').style.display = '';
+    }
+    const userForm = document.querySelector('form');
+
+    userForm.addEventListener('submit', async e => {
+        e.preventDefault();
+
+        const formData = new FormData(userForm);
+        console.log(formData);
+        const searchParams = new URLSearchParams();
+
+        for (const pair of formData) {
+            searchParams.append(pair[0], pair[1]);
+        }
+
+        const response = await fetch('/submit-form', {
+            method: 'POST',
+            body: searchParams,
+        });
+
+        console.log(response);
+        const status = await response.json();
+        createModal(status);
+    })
 </script>
 </html>

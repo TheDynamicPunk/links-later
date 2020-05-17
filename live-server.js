@@ -1,9 +1,11 @@
 const express = require('express');
 const app = express();
+const { check, validationResult } = require('express-validator');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const port = process.env.PORT || 3000;
 const previewLinks = require('./scrape');
+const handleForm = require('./handleForm');
 
 //Redirect all requests from http to https
 app.use( function requireHTTPS(req, res, next) {
@@ -16,6 +18,7 @@ app.use( function requireHTTPS(req, res, next) {
 });
 
 app.use(express.static('public'));
+app.use(express.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
@@ -46,6 +49,32 @@ app.post('/scrapeLinks', async (req, res) => {
     console.log('Scraping Links...');
     const result = await previewLinks(req.body.links);
     res.send(result);
+});
+
+app.post('/submit-form', [
+    check('userEmail').isEmail(),
+    check('issueTitle').isAscii(),
+    check('issue').isAscii(),
+    check('buggy_link').optional({checkFalsy: false}).isURL(),
+
+], (req, res) => {
+
+    console.log('User email: ', req.body.userEmail);
+    console.log('Issue Title: ', req.body.issueTitle);
+    console.log('Issue: ', req.body.issue);
+    console.log('Buggy Link: ', req.body.buggy_link);
+
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty())
+    {
+        console.log('errors: ', errors.array());
+        return res.status(422).jsonp(errors.array());
+    }
+    else {
+        handleForm(req.body);
+        return res.status(200).jsonp(errors.array());
+    }
 });
 
 app.listen(port, () => {
