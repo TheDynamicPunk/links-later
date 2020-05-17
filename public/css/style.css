@@ -203,6 +203,7 @@ select {
         min-height: 170px;
         max-height: 250px;
         overflow: hidden;
+        border-radius: 15px;
         -webkit-box-shadow: 5px 5px 11px 3px rgba(0,0,0,0.43);
         -moz-box-shadow: 5px 5px 11px 3px rgba(0,0,0,0.43);
         box-shadow: 5px 5px 11px 3px rgba(0,0,0,0.43);
