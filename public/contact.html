@@ -126,6 +126,7 @@
             modalImg.setAttribute('src', './assets/relax.svg');
             modalTitle.textContent = 'Sent!';
             modalContent.textContent = 'Now sit back and relax! We\'re working hard to address the issue and will get in touch if need be!';
+            document.querySelector('form').reset();
         } else {
             const errorMsg = '';
             modalImg.setAttribute('src', './assets/sad.svg');
