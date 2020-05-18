@@ -66,6 +66,8 @@
         </div>
     </section>
 
+    <div class="toast-wrapper" style="display: none;"></div>
+
     <div class="footer"></div>
 </body>
 <script>
@@ -88,6 +90,7 @@
     $(document).ready(function() {
         $('.navbar').load('navbar.html');
         $('.footer').load('footer.html');
+        $('.toast-wrapper').load('toast.html');
         
         let timerId;
 

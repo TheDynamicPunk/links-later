@@ -50,28 +50,52 @@ function clearInput() {
     document.querySelector('#links-input').innerHTML = '';
 }
 
+function makeToast(content, btn, closeBtn) {
+    document.querySelector('.toast span').textContent = content;
+    document.querySelector('.toast button').textContent = btn;
+    let closeButton = document.querySelector('.toast .close-btn');
+    
+    if(closeButton != null && closeBtn === false)
+        document.querySelector('.toast .close-btn').remove();
+
+    document.querySelector('.toast-wrapper').style.display = '';
+}
+
 function deletePane(element) {
     let paneLink = element.previousSibling.getAttribute('href');
     let pane = element.parentNode.parentNode.parentNode;
 
+    makeToast('Link deleted', 'Undo', false);
+
     pane.classList.add('delete-pane');
     pane.addEventListener('animationend', () => {
-        console.log('animation end!');
+        pane.style.display = 'none';
+    });
+
+    let timerId = setTimeout(() => {
         pane.remove();
-    });
-    
-    let data = getSavedLinks();
+        
+        let data = getSavedLinks();
 
-    _.remove(data, item => {
-        return item.url === paneLink;
-    });
-    
-    localStorage.setItem('savedLinks', JSON.stringify(data));
-    
-    updateNoOfLinks();
-    isCollectionEmpty();
+        _.remove(data, item => {
+            return item.url === paneLink;
+        });
+        
+        localStorage.setItem('savedLinks', JSON.stringify(data));
+        
+        updateNoOfLinks();
+        isCollectionEmpty();
 
-    console.log('Pane deleted...');
+        console.log('Pane deleted...');
+        document.querySelector('.toast-wrapper').style.display = 'none';
+    }, 10000);
+
+    document.querySelector('.toast button').addEventListener('click', () => {
+        clearTimeout(timerId);
+        pane.classList.remove('delete-pane');
+        pane.style.display = '';
+        document.querySelector('.toast-wrapper').style.display = 'none';
+    })
 }
 
 function isCollectionEmpty() {

@@ -1,0 +1,57 @@
+<div class="toast">
+    <span></span>
+    <button></button>
+    <span class="close-btn">x</span>
+</div>
+<style>
+    .toast {
+        margin: 1em;
+        padding: 0.75em 1.5em;
+        border-radius: 10px;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        z-index: 1;
+        background-color: #ffffff;
+        -webkit-box-shadow: 3px 0px 15px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 3px 0px 15px 0px rgba(0,0,0,0.75);
+        box-shadow: 3px 0px 15px 0px rgba(0,0,0,0.75);
+    }
+    .toast button {
+        cursor: pointer;
+        border: none;
+        outline: none;
+        margin-left: 1em;
+        padding: 0.5em 0.75em;
+        border-radius: 5px;
+        background-color: #e3f2fd;
+        font-weight: 500;
+        color: #1e88e5;
+    }
+
+    .toast button:hover {
+        background-color: #c7e5fd;
+        color: #42a5f5;
+    }
+    .close-btn {
+        cursor: pointer;
+        padding: 5px;
+        font-size: 1.3em;
+        margin-left: 1em;
+        font-weight: 900;
+        color: #464646;
+    }
+    .close-btn:hover {
+        color: black;
+    }
+    .close {
+        display: none;
+    }
+</style>
+<script>
+    document.querySelector('.close-btn').addEventListener('click', () => {
+        document.querySelector('.toast').classList.add('close');
+    });
+</script>
