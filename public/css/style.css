@@ -32,7 +32,7 @@ h1 {
 .btn1 {
     text-decoration: none;
     cursor: pointer;
-    margin-left: 0.9em;
+    /* margin-left: 0.9em; */
     margin-bottom: 1em;
     padding: 0.5em 1.5em;
     border-radius: 20px;
@@ -88,6 +88,10 @@ h1 {
 
 #links-input[placeholder]:empty:focus::before {
     content: attr(placeholder);
+}
+
+.btns button:not(:first-child) {
+    margin-left: 2em;
 }
 
 img {
@@ -161,6 +165,14 @@ select {
 
 .pane #timestamp::before {
     content: 'Added on: ';
+}
+
+.cta-btns {
+    margin-left: 1em;
+}
+
+.cta-btns button:not(:first-child) {
+    margin-left: 1em;
 }
 
 .delete-pane {
@@ -257,14 +269,16 @@ select {
         height: 2em;
         background: linear-gradient(180deg, #ffffff00 0%, #000000a4 100%); 
     }
-    .btn1 {
-        width: max-content;
-        margin-left: 0.5em;
+    .btns button:not(:first-child) {
+        margin-left: 1em;
     }
     .cta-btns {
         margin-top: 1em;
         margin-left: 43%;
         padding-left: 0;
+    }
+    .cta-btns button:not(:first-child) {
+        margin-left: 0.5em;
     }
 }
 
