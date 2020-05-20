@@ -1,5 +1,16 @@
 let loader = document.querySelector('.loader');
 
+function pressedEnter(e) {
+    e.preventDefault();
+    
+    let code = e.keyCode ? e.keyCode : e.which;
+
+    if(code === 13)
+    {
+        fetchLinks();
+    }
+}
+
 function updateNoOfLinks() {
     document.querySelector('.number-of-links').textContent = 'Links collected: ' + getSavedLinks().length;
 }
@@ -157,7 +168,9 @@ document.querySelector('select#sortMethods').addEventListener('change', (event) 
     sortPanes(document.querySelector('select#sortMethods').value);
 });
 
-document.querySelector('.add-links').addEventListener('click', async () => {
+document.querySelector('.add-links').addEventListener('click', fetchLinks);
+
+async function fetchLinks() {
     let linksInput = document.querySelector('#links-input') || document.querySelector('#links-input span');
 
     if(linksInput != null && linksInput.textContent != '')
@@ -203,7 +216,7 @@ document.querySelector('.add-links').addEventListener('click', async () => {
         let randomValue = Math.floor((Math.random() * 4));
         document.querySelector('#links-input').setAttribute('placeholder', quotes[randomValue]);
     }
-});
+}
 
 function createPanes(data) {  
 
