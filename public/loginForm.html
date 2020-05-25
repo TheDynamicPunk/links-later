@@ -1,24 +1,50 @@
 <link rel="stylesheet" href="css/style.css">
-<div class="login-container">
-    <h2>Login</h2>
-    <div class="form-content">
-        <form id="login-form">
-            <label for="userEmail"><b>Your email</b></label>
-            <input type="email" name="userEmail" placeholder="Enter your email">
-            <label for="userPassword"><b>Your password</b></label>
-            <input type="password" name="userPassword" id="userPassword" placeholder="Enter your password">
-            <div class="cta-options">
-                <a class="btn2" href="#">Forgot password?</a>
-                <a class="btn2" href="#">Sign Up instead?</a>
-            </div>
-            <div class="form-btns">
-                <input type="reset" value="Reset">
-                <input type="submit" value="Login">
-            </div>
-        </form>
+<div class="window">
+    <div class="login-container">
+        <h2>Login</h2>
+        <span class="close-btn" onclick="closeWindow(this)" style="font-size: 1rem;"><i class="fas fa-times fa-lg"></i></span>
+        <div class="form-content">
+            <form id="login-form">
+                <label for="userEmail"><b>Your email</b></label>
+                <input type="email" name="userEmail" placeholder="Enter your email">
+                <label for="userPassword"><b>Your password</b></label>
+                <input type="password" name="userPassword" id="userPassword" placeholder="Enter your password">
+                <div class="cta-options">
+                    <a class="btn2" href="#">Forgot password?</a>
+                    <a class="btn2" href="signupForm.html">Sign Up instead?</a>
+                </div>
+                <div class="form-btns">
+                    <input type="reset" value="Reset">
+                    <input type="submit" value="Login">
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 <style>
+    .close-btn {
+        position: absolute;
+        top: 1.5em;
+        right: 1.5em;
+        cursor: pointer;
+        padding: 0.5em;
+        color: #4b4b4b;
+    }
+    .close-btn:hover {
+        color: black;
+    }
+    .hide {
+        display: none;
+    }
+    .window {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.8);
+        height: 100%;
+        width: 100%;
+        z-index: 1;
+    }
     .login-container{
         position: fixed;
         top: 50%;
@@ -126,6 +152,10 @@
     }
 </style>
 <script>
+
+    function closeWindow(element) {
+        document.querySelector('.login_window').classList.toggle('hide');
+    }
 
     const userForm = document.querySelector('#login-form');
 

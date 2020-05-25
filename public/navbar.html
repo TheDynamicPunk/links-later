@@ -137,10 +137,15 @@
     <ul class="nav_links">
         <li><a href="about.html" id="about-link">About</a></li>
         <li><a href="contact.html">Contact Us</a></li>
-        <li><a href="faq.html">FAQ</a></li>
+        <li><a id="login-nav-link" href="#">Login</a></li>
     </ul>
 </nav>
 <script>
+    
+    document.querySelector('#login-nav-link').addEventListener('click', () => {
+        document.querySelector('.login_window').classList.toggle('hide')
+    })
+
     const hamburger = document.querySelector('.hamburger');
     const lines = document.querySelectorAll('.line');
     const navLinks = document.querySelector('.nav_links');

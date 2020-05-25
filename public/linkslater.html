@@ -17,6 +17,8 @@
 <body>
     <div class="modal-wrapper"></div>
     <div class="navbar"></div>
+    <div class="login_window hide"></div>
+    
     <section id="input-section">
         <h1 style="text-align: center;">Paste links to track here, separated by comma 👇🏻</h1>
         <div contenteditable="true" id="links-input" placeholder="Add some links here😉" onkeypress="pressedEnter(event)"></div>
@@ -92,6 +94,7 @@
         $('.navbar').load('navbar.html');
         $('.footer').load('footer.html');
         $('.toast-wrapper').load('toast.html');
+        $('.login_window').load('loginForm.html');
         
         let timerId;
 

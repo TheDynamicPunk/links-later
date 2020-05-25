@@ -1,24 +1,35 @@
-<link rel="stylesheet" href="css/style.css">
-<div class="login-container">
-    <h2>Sign Up</h2>
-    <div class="form-content">
-        <form id="login-form">
-            <label for="userEmail"><b>Your email</b></label>
-            <input type="email" name="userEmail" placeholder="Enter your email">
-            <label for="userPassword"><b>Your password</b></label>
-            <input type="password" name="userPassword" id="userPassword" placeholder="Enter your password">
-            <label for="confUserPassword"><b>Confirm Password</b></label>
-            <input type="password" name="confirm-pwd" id="confirm-pwd" placeholder="Enter your password again">
-            <div class="cta-options">
-                <p style="font-size: 0.9rem;">Already have account? <a class="btn2" href="#">Login</a></p>
-            </div>
-            <div class="form-btns">
-                <input type="reset" value="Reset">
-                <input type="submit" value="Login">
-            </div>
-        </form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Sign Up | Links Later</title>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Sign Up</h2>
+        <div class="form-content">
+            <form id="login-form">
+                <label for="userame"><b>Your username</b></label>
+                <input type="text" name="username" id="username" placeholder="Enter your username">
+                <label for="userEmail"><b>Your email</b></label>
+                <input type="email" name="userEmail" placeholder="Enter your email">
+                <label for="userPassword"><b>Your password</b></label>
+                <input type="password" name="userPassword" id="userPassword" placeholder="Enter your password">
+                <label for="confUserPassword"><b>Confirm Password</b></label>
+                <input type="password" name="confirm-pwd" id="confirm-pwd" placeholder="Enter your password again">
+                <div class="cta-options">
+                    <p style="font-size: 0.9rem;">Already have account? <a class="btn2" href="loginForm.html">Login</a></p>
+                </div>
+                <div class="form-btns">
+                    <input type="reset" value="Reset">
+                    <input type="submit" value="Login">
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+</body>
 <style>
     .login-container{
         position: fixed;
@@ -45,7 +56,7 @@
         align-items: center;
         gap: 1em;
     }
-    input[type=email], input[type=password] {
+    input[type=email], input[type=password], input[type=text] {
         resize: vertical;
         height: max-login-container;
         font-size: 0.9rem;
@@ -55,10 +66,10 @@
         box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
         outline: none;
     }
-    input[type=email]:hover, input[type=password]:hover {
+    input[type=email]:hover, input[type=password]:hover, input[type=text]:hover {
         box-shadow:0 0 15px 4px rgba(0,0,0,0.15);
     }
-    input[type=email]:focus, input[type=password]:focus {
+    input[type=email]:focus, input[type=password]:focus, input[type=text]:focus {
         box-shadow:0 0 15px 4px rgba(0,0,0,0.15);
     }
     input[type=submit], input[type=reset] {
@@ -104,7 +115,7 @@
             flex-direction: column;
             align-items: flex-start;
         }
-        input[type=email], input[type=password] {
+        input[type=email], input[type=password], input[type=text] {
             margin: 1em 0;
             width: 100%;
         }
