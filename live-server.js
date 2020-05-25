@@ -52,17 +52,17 @@ app.post('/scrapeLinks', async (req, res) => {
 });
 
 app.post('/submit-form', [
-    check('userEmail').isEmail(),
-    check('issueTitle').isAscii(),
-    check('issue').isAscii(),
-    check('buggy_link').optional({checkFalsy: false}).isURL(),
+    check('userEmail').isEmail().withMessage('Please enter a valid e-mail id!'),
+    check('issueTitle').isAscii().withMessage('Please enter valid characters in issue title!'),
+    check('issue').isAscii().withMessage('Please enter valid characters in issue description!'),
+    check('buggyLink').optional({checkFalsy: true}).isURL().withMessage('Please enter a valid URL!')
 
 ], (req, res) => {
 
     console.log('User email: ', req.body.userEmail);
     console.log('Issue Title: ', req.body.issueTitle);
     console.log('Issue: ', req.body.issue);
-    console.log('Buggy Link: ', req.body.buggy_link);
+    console.log('Buggy Link: ', req.body.buggyLink);
 
     const errors = validationResult(req);
 

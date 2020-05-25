@@ -163,10 +163,14 @@
             modalContent.textContent = 'Now sit back and relax! We\'re working hard to address the issue and will get in touch if need be!';
             document.querySelector('form').reset();
         } else {
-            const errorMsg = '';
             modalImg.setAttribute('src', './assets/sad.svg');
             modalTitle.textContent = 'Error';
-            modalContent.textContent = 'Please provide valid input!';
+            modalContent.textContent = 'Please correct the following errors';
+
+            errors.forEach( item => {
+                console.log(item.msg);
+                modalContent.innerHTML += `<li>${item.msg}</li>`;
+            });
         }
 
         document.querySelector('.modal-wrapper').style.display = '';
