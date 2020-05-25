@@ -1,0 +1,153 @@
+<link rel="stylesheet" href="css/style.css">
+<div class="login-container">
+    <h2>Login</h2>
+    <div class="form-content">
+        <form id="login-form">
+            <label for="userEmail"><b>Your email</b></label>
+            <input type="email" name="userEmail" placeholder="Enter your email">
+            <label for="userPassword"><b>Your password</b></label>
+            <input type="password" name="userPassword" id="userPassword" placeholder="Enter your password">
+            <div class="cta-options">
+                <a class="btn2" href="#">Forgot password?</a>
+                <a class="btn2" href="#">Sign Up instead?</a>
+            </div>
+            <div class="form-btns">
+                <input type="reset" value="Reset">
+                <input type="submit" value="Login">
+            </div>
+        </form>
+    </div>
+</div>
+<style>
+    .login-container{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 2em;
+        margin-bottom: 5em;
+        width: 70%;
+        background-color: rgb(215, 255, 205);
+        max-width: 550px;
+    }
+    h2 {
+        margin-bottom: 10px;
+        font-size: 2rem;
+    }
+    .btn2 {
+        font-size: 0.8rem;
+    }
+    #login-form {
+        margin: 2em 0;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: center;
+        gap: 1em;
+    }
+    input[type=email], input[type=password] {
+        resize: vertical;
+        height: max-login-container;
+        font-size: 0.9rem;
+        border-radius: 10px;
+        border: none;
+        padding: 1em 0.8em;
+        box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
+        outline: none;
+    }
+    input[type=email]:hover, input[type=password]:hover {
+        box-shadow:0 0 15px 4px rgba(0,0,0,0.15);
+    }
+    input[type=email]:focus, input[type=password]:focus {
+        box-shadow:0 0 15px 4px rgba(0,0,0,0.15);
+    }
+    input[type=submit], input[type=reset] {
+        text-decoration: none;
+        cursor: pointer;
+        padding: 0.5em 1.5em;
+        border-radius: 20px;
+        background-color: white;
+        border: 2px solid #ef476f;
+        color: #ef476f;
+        outline: none;
+        font-size: 1rem;
+        font-weight: bolder;
+        transition: 0.2s ease-in;
+    }
+    input[type=submit]:hover, input[type=reset]:hover {
+        color: white;
+        background-color: #ef476f;
+    }
+    .cta-options {
+        grid-column: 1/3;
+    }
+    .cta-options a:not(:first-child){
+        margin-left: 2em;
+    }
+    .form-btns {
+        grid-column: 1/3;
+        margin: 1em 0;
+    }
+    .form-btns input:last-child {
+        margin-left: 1em;
+    }
+
+    @media screen and (max-width: 768px) {
+        .login-container{
+            width: 85%
+        }
+    }
+    @media  screen and (max-width: 600px) {
+        #login-form {
+            display: flex;
+            gap: 0;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        input[type=email], input[type=password] {
+            margin: 1em 0;
+            width: 100%;
+        }
+        .cta-options {
+            display: flex;
+            flex-direction: column;
+        }
+        .cta-options a:not(:first-child){
+            margin-left: 0;
+            margin-top: 1em;
+        }
+        .form-btns {
+            margin-left: 0;
+        }
+    }
+    @media screen and (max-width: 360px) {
+        .form-btns input:last-child {
+            margin-left: 0.2em;
+        }
+    }
+</style>
+<script>
+
+    const userForm = document.querySelector('#login-form');
+
+    userForm.addEventListener('submit', async e => {
+        e.preventDefault();
+
+        const formData = new FormData(userForm);
+        console.log(formData);
+        const searchParams = new URLSearchParams();
+
+        for (const pair of formData) {
+            searchParams.append(pair[0], pair[1]);
+        }
+
+        const response = await fetch('/login', {
+            method: 'POST',
+            body: searchParams,
+        });
+
+        console.log(response);
+        const status = await response.json();
+        createModal(status);
+    })
+</script>
+</html>
