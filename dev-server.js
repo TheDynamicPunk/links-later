@@ -7,6 +7,8 @@ const port = process.env.PORT || 3000;
 const previewLinks = require('./scrape');
 const handleForm = require('./handleForm');
 
+const signupRoute = require('./routes/signup');
+
 //Redirect all requests from http to https
 // app.use( function requireHTTPS(req, res, next) {
 //     // The 'x-forwarded-proto' check is for Heroku
@@ -40,6 +42,8 @@ app.use(function (req, res, next) {
     } 
   next();
 });
+
+app.use('/signup', signupRoute);
 
 app.get('/', (req, res) => {
     res.sendFile('public/linkslater.html', {root: __dirname});
