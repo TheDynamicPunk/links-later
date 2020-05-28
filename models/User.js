@@ -26,10 +26,10 @@ const userSchema = mongoose.Schema({
         type: Date,
         default: Date.now()
     },
-    storedLinks: [{
-        url: { type: String },
-        dateAdded: { type: Date, default: Date.now() }
-    }]
+    storedLinks: { 
+        type: Array,
+        default: []
+    }
 });
 
 module.exports = mongoose.model('User', userSchema);
