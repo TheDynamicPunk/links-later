@@ -267,10 +267,8 @@
             body: searchParams,
         });
 
-        console.log(response);
-        const status = await response.json();
-
-        console.log(status);
-    })
+        console.log(response.url);
+        window.location.href = response.url;
+    });
 </script>
 </html>
