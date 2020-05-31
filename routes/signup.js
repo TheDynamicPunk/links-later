@@ -34,7 +34,7 @@ router.post('/', [
     .escape(),
 
 ], async (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
 
     const validationErrors = validationResult(req);
     console.log('Validation Errors: ', validationErrors.errors);

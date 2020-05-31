@@ -8,7 +8,7 @@ router.get('/', hasToken, async (req, res) => {
     console.log('fetching user data now!');
 
     const { _id:userID } = jwt.decode(req.cookies.auth_token);
-    console.log('userid: ', userID);
+    // console.log('userid: ', userID);
     const { username, storedLinks } = await User.findOne({_id: userID});
 
     console.log(username);

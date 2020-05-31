@@ -9,7 +9,7 @@ router.post('/', [
     check('userPassword').trim().escape()
 ], async (req, res) => {
     console.log('inside login post');
-    console.log('req: ', req.body);
+    // console.log('req: ', req.body);
 
     const validationErrors = validationResult(req);
     console.log('Validation Errors: ', validationErrors.errors);
