@@ -1,13 +1,32 @@
 const express = require('express');
 const app = express();
+require('dotenv').config();
 const { check, validationResult } = require('express-validator');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const mongoose = require('mongoose');
 const port = process.env.PORT || 3000;
 const previewLinks = require('./scrape');
 const handleForm = require('./handleForm');
 
-//Redirect all requests from http to https
+//Route handlers
+const authRoute = require('./routes/authenticate');
+const signupRoute = require('./routes/signup');
+const loginRoute = require('./routes/login');
+const fetchUserData = require('./routes/fetchUserData');
+const updateUser = require('./routes/updateUserLinks');
+const signOutRoute = require('./routes/signout');
+
+//Connect to DB
+mongoose.connect( process.env.DB_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true 
+    }, () => {
+      console.log("Connected to DB!");
+    }
+);
+
+// Redirect all requests from http to https
 app.use( function requireHTTPS(req, res, next) {
     // The 'x-forwarded-proto' check is for Heroku
     if (!req.secure && req.get('x-forwarded-proto') !== 'https')
@@ -17,6 +36,7 @@ app.use( function requireHTTPS(req, res, next) {
     next();
 });
 
+// Middlewares
 app.use(express.static('public'));
 app.use(express.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -40,6 +60,13 @@ app.use(function (req, res, next) {
     } 
   next();
 });
+
+app.use('/sign-out', signOutRoute);
+app.use('/authenticate', authRoute);
+app.use('/signup', signupRoute);
+app.use('/login', loginRoute);
+app.use('/get-data', fetchUserData);
+app.use('/update-user', updateUser);
 
 app.get('/', (req, res) => {
     res.sendFile('public/linkslater.html', {root: __dirname});
