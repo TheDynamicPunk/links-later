@@ -254,6 +254,9 @@
     userForm.addEventListener('submit', async e => {
         e.preventDefault();
 
+        //Ensure password is always type=password when submitting
+        document.querySelector('#userPassword').setAttribute('type', 'password');
+
         const formData = new FormData(userForm);
         console.log(formData);
         const searchParams = new URLSearchParams();
