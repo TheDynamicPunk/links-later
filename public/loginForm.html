@@ -1,26 +1,35 @@
-<link rel="stylesheet" href="css/style.css">
-<div class="window">
-    <div class="login-container">
-        <h2>Login</h2>
-        <span class="close-btn" onclick="closeWindow(this)" style="font-size: 1rem;"><i class="fas fa-times fa-lg"></i></span>
-        <div class="form-content">
-            <form id="login-form">
-                <label for="userEmail"><b>Your email</b></label>
-                <input type="email" name="userEmail" placeholder="Enter your email">
-                <label for="userPassword"><b>Your password</b></label>
-                <input type="password" name="userPassword" id="userPassword" placeholder="Enter your password">
-                <div class="cta-options">
-                    <a class="btn2" href="#">Forgot password?</a>
-                    <a class="btn2" href="signupForm.html">Sign Up instead?</a>
-                </div>
-                <div class="form-btns">
-                    <input type="reset" value="Reset">
-                    <input type="submit" value="Login">
-                </div>
-            </form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Login | Links Later</title>
+</head>
+<body>
+    <div class="window">
+        <div class="login-container">
+            <h2>Login</h2>
+            <span class="close-btn" onclick="closeWindow(this)" style="font-size: 1rem;"><i class="fas fa-times fa-lg"></i></span>
+            <div class="form-content">
+                <form id="login-form">
+                    <label for="userEmail"><b>Your email or username</b></label>
+                    <input type="email" name="userEmail" placeholder="Enter your email">
+                    <label for="userPassword"><b>Your password</b></label>
+                    <input type="password" name="userPassword" id="userPassword" placeholder="Enter your password">
+                    <div class="cta-options">
+                        <a class="btn2" href="#">Forgot password?</a>
+                        <a class="btn2" href="signupForm.html">Sign Up instead?</a>
+                    </div>
+                    <div class="form-btns">
+                        <input type="reset" value="Reset">
+                        <input type="submit" value="Login">
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+</body>
 <style>
     .close-btn {
         position: absolute;
@@ -175,9 +184,8 @@
             body: searchParams,
         });
 
-        console.log(response);
-        const status = await response.json();
-        createModal(status);
+        console.log(response.url);
+        window.location.href = response.url;
     })
 </script>
 </html>
