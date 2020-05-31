@@ -10,7 +10,6 @@ const previewLinks = require('./scrape');
 const handleForm = require('./handleForm');
 
 //Route handlers
-const authRoute = require('./routes/authenticate');
 const signupRoute = require('./routes/signup');
 const loginRoute = require('./routes/login');
 const fetchUserData = require('./routes/fetchUserData');
@@ -62,7 +61,6 @@ app.use(function (req, res, next) {
 });
 
 app.use('/sign-out', signOutRoute);
-app.use('/authenticate', authRoute);
 app.use('/signup', signupRoute);
 app.use('/login', loginRoute);
 app.use('/get-data', fetchUserData);
