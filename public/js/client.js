@@ -373,6 +373,10 @@ window.onload = async () => {
         }
         else {
             console.log(userData.err);
+            updateNoOfLinks();
+
+            if(!isCollectionEmpty())
+                createPanes(getSavedLinks());
         }
 
         if(localStorage.getItem('sortPreference'))
