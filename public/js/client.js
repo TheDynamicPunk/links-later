@@ -61,12 +61,12 @@ function clearInput() {
     document.querySelector('#links-input').innerHTML = '';
 }
 
-function makeToast(content, btn, closeBtn) {
+function makeToast(content, btn, showCloseBtn) {
     document.querySelector('.toast span').textContent = content;
     document.querySelector('.toast button').textContent = btn;
     let closeButton = document.querySelector('.toast .close-btn');
     
-    if(closeButton != null && closeBtn === false)
+    if(closeButton != null && showCloseBtn === false)
         document.querySelector('.toast .close-btn').remove();
 
     document.querySelector('.toast-wrapper').style.display = '';
@@ -83,7 +83,7 @@ function deletePane(element) {
         pane.style.display = 'none';
     });
 
-    let timerId = setTimeout(() => {
+    let timerId = setTimeout( async () => {
         pane.remove();
         
         let data = getSavedLinks();
@@ -94,6 +94,18 @@ function deletePane(element) {
         
         localStorage.setItem('savedLinks', JSON.stringify(data));
         
+        console.log('fetching user data!');
+
+        const response = await fetch('/get-data');
+        const userData = await response.json();
+
+        if(!userData.err) {
+            console.log('In if block!');
+            console.log('userData: ', userData);
+
+            syncWithServer( paneLink, 'delete');
+        }
+
         updateNoOfLinks();
         isCollectionEmpty();
 
@@ -110,7 +122,7 @@ function deletePane(element) {
 }
 
 function isCollectionEmpty() {
-    if(_.isEmpty(JSON.parse(localStorage.getItem('savedLinks'))))
+    if(_.isEmpty(getSavedLinks()))
     {
         document.querySelector('.no-links-prompt').style.display = '';
         return true;
@@ -135,11 +147,23 @@ function newlyAdded(params) {
     return _.differenceBy(params, getSavedLinks(), 'url');
 }
 
-function saveLocalLinks(params) {
+async function saveLocalLinks(params) {
     
     let result = _.unionBy(params, getSavedLinks(), 'url');
     localStorage.setItem('savedLinks', JSON.stringify(result));
-    
+
+    console.log('fetching user data!');
+
+    const response = await fetch('/get-data');
+    const userData = await response.json();
+
+    if(!userData.err) {
+        console.log('In if block!');
+        console.log('userData: ', userData);
+
+        syncWithServer(getSavedLinks(), 'add');
+    }
+
     updateNoOfLinks();
     
     console.log('Local storage updated...');
@@ -169,6 +193,42 @@ document.querySelector('select#sortMethods').addEventListener('change', (event) 
 });
 
 document.querySelector('.add-links').addEventListener('click', fetchLinks);
+
+async function syncWithServer(linksData, options) {
+
+    let payload = {
+        links: linksData,
+        options: options
+    };
+
+    const data = fetch('/update-user', {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(payload),
+    }
+    ).then( res => {
+        if(res.status === 200)
+            console.log('Synced with cloud!');
+        else
+            console.log('Connection error!');
+    }).then( async () => {
+        const response = await fetch('/get-data');
+        const data = await response.json();
+        console.log('data update-user: ', data);
+
+        if(data.links.length !== 0)
+        {
+            localStorage.setItem('savedLinks', JSON.stringify(data.links));
+            // createPanes(getSavedLinks());
+            updateNoOfLinks();
+            return data.links;
+        }
+    });
+
+    return await data;
+}
 
 async function fetchLinks() {
     let linksInput = document.querySelector('#links-input') || document.querySelector('#links-input span');
@@ -220,6 +280,7 @@ async function fetchLinks() {
 
 function createPanes(data) {  
 
+    console.log('Creating panes...');
     isCollectionEmpty();
 
     data.forEach( item => {
@@ -291,17 +352,35 @@ function createPanes(data) {
     });
 }
 
-window.onload = () => {
-    let prevData = JSON.parse(localStorage.getItem('savedLinks'));
+window.onload = async () => {
 
-    updateNoOfLinks();
+    try {
+        const response = await fetch('/get-data');
+        const userData = await response.json();
 
-    if(!isCollectionEmpty()) {
-        createPanes(prevData);
-    }
+        if(!userData.err) {
+            console.log('In if block!');
+            console.log('userData: ', userData);
 
-    if(localStorage.getItem('sortPreference'))
-    {
-        document.querySelector('select#sortMethods').value = localStorage.getItem('sortPreference');
+            const data = await syncWithServer(getSavedLinks(), 'add');
+
+            updateNoOfLinks();
+
+            if(data.length !== 0) {
+                console.log('after getting data!');
+                createPanes(data);
+            }
+        }
+        else {
+            console.log(userData.err);
+        }
+
+        if(localStorage.getItem('sortPreference'))
+        {
+            document.querySelector('select#sortMethods').value = localStorage.getItem('sortPreference');
+        }
+        
+    } catch (err) {
+        console.log(err);
     }
 }
