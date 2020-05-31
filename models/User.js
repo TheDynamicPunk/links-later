@@ -29,6 +29,10 @@ const userSchema = mongoose.Schema({
     storedLinks: { 
         type: Array,
         default: []
+    },
+    issuedTokens: {
+        type: Array,
+        default: []
     }
 });
 
