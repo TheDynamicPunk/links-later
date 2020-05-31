@@ -3,7 +3,6 @@ const User = require('../models/User');
 const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const mongoose = require('mongoose');
 
 router.post('/', [
 
@@ -71,8 +70,21 @@ router.post('/', [
         password: hashedPassword
     });
 
-    const savedUser = await user.save();
-    res.status(200).send(savedUser);
+    await user.save();
+
+    console.log('Fetching data from DB');
+    const userAccount = await User.findOne({email: req.body.userEmail});
+    const token = jwt.sign({_id: userAccount._id}, process.env.TOKEN_SECRET, {expiresIn: '1d'});
+    await User.updateOne({_id: userAccount._id}, {$push: {issuedTokens: {$each: [token]}}});
+
+    res.cookie('auth_token', token, {
+        expires: new Date(Date.now() + (1 * 86400000)),
+        httpOnly: true,
+        sameSite: true,
+        
+        //Disable secure for localhost and enable for production!
+        secure: true
+    }).status(200).redirect('/');
 });
 
 module.exports = router;
