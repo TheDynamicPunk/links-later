@@ -1,16 +1,15 @@
-<div class="toast">
+<!-- <div class="toast">
     <span></span>
     <button></button>
     <span class="close-btn">x</span>
-</div>
+</div> -->
 <style>
     .toast {
-        margin: 1em;
+        margin: 0.5em;
         padding: 0.75em 1.5em;
         border-radius: 10px;
-        position: fixed;
-        bottom: 0;
-        right: 0;
+        height: max-content;
+        width: max-content;
         display: flex;
         align-items: center;
         z-index: 1;
@@ -51,7 +50,7 @@
     }
 </style>
 <script>
-    document.querySelector('.close-btn').addEventListener('click', () => {
-        document.querySelector('.toast').classList.add('close');
-    });
+    function closeToast(element) {
+        element.parentNode.remove();
+    }
 </script>

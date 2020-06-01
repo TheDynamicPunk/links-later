@@ -63,21 +63,25 @@ function clearInput() {
 }
 
 function makeToast(content, btn, showCloseBtn) {
-    document.querySelector('.toast span').textContent = content;
-    document.querySelector('.toast button').textContent = btn;
-    let closeButton = document.querySelector('.toast .close-btn');
-    
-    if(closeButton != null && showCloseBtn === false)
-        document.querySelector('.toast .close-btn').remove();
+    let toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.id = 'xk' + Math.random().toString(36).slice(2);
 
-    document.querySelector('.toast-wrapper').style.display = '';
+    if(showCloseBtn)
+        toast.innerHTML = `<span>${content}</span><button>${btn}</button><span class="close-btn" onclick="closeToast(this)">x</span>`;
+    else
+        toast.innerHTML = `<span>${content}</span><button>${btn}</button>`;
+
+    document.querySelector('.toast-wrapper').append(toast);
+
+    return toast.id;
 }
 
 function deletePane(element) {
     let paneLink = element.previousSibling.getAttribute('href');
     let pane = element.parentNode.parentNode.parentNode;
 
-    makeToast('Link deleted', 'Undo', false);
+    let toastId = makeToast('Link deleted', 'Undo', false);
 
     pane.classList.add('delete-pane');
     pane.addEventListener('animationend', () => {
@@ -111,14 +115,14 @@ function deletePane(element) {
         isCollectionEmpty();
 
         console.log('Pane deleted...');
-        document.querySelector('.toast-wrapper').style.display = 'none';
+        document.querySelector(`#${toastId}`).remove();
     }, 10000);
 
-    document.querySelector('.toast button').addEventListener('click', () => {
+    document.querySelector(`#${toastId} button`).addEventListener('click', () => {
         clearTimeout(timerId);
         pane.classList.remove('delete-pane');
         pane.style.display = '';
-        document.querySelector('.toast-wrapper').style.display = 'none';
+        document.querySelector(`#${toastId}`).remove();
     })
 }
 

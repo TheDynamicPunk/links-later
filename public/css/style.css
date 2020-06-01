@@ -180,6 +180,19 @@ select {
 	        animation: scale-down-center 0.5s ease-out forwards;
 }
 
+.toast-wrapper {
+    position: fixed;
+    margin-bottom: 1em;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    height: 100%;
+    width: max-content;
+    z-index: 1;
+}
+
 @-webkit-keyframes scale-down-center {
     0% {
       -webkit-transform: scale(1);
