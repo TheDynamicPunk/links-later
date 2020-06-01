@@ -68,7 +68,7 @@ function makeToast(content, btn, showCloseBtn) {
     toast.id = 'xk' + Math.random().toString(36).slice(2);
 
     if(showCloseBtn)
-        toast.innerHTML = `<span>${content}</span><button>${btn}</button><span class="close-btn" onclick="closeToast(this)">x</span>`;
+        toast.innerHTML = `<span>${content}</span><button>${btn}</button><span class="close-btn" onclick="closeToast(this)"><i class="fas fa-times"></i></span>`;
     else
         toast.innerHTML = `<span>${content}</span><button>${btn}</button>`;
 

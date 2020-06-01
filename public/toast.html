@@ -35,15 +35,26 @@
         color: #42a5f5;
     }
     .close-btn {
+        position: relative;
         cursor: pointer;
         padding: 5px;
-        font-size: 1.3em;
+        /* font-size: 1.1em; */
         margin-left: 1em;
-        font-weight: 900;
+        /* font-weight: 900; */
         color: #464646;
     }
-    .close-btn:hover {
+    /* .close-btn:hover {
         color: black;
+    } */
+    .close-btn:hover::before {
+        content: '';
+        width: 29px;
+        height: 29px;
+        background-color: #b5b5b5;
+        position: absolute;
+        transform: translate(-19%, -19%);
+        z-index: -1;
+        border-radius: 50%;
     }
     .close {
         display: none;

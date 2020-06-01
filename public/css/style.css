@@ -188,7 +188,8 @@ select {
     display: flex;
     flex-direction: column-reverse;
     align-items: flex-end;
-    height: 100%;
+    height: max-content;
+    max-height: 100%;
     width: max-content;
     z-index: 1;
 }
