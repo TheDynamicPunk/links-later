@@ -380,6 +380,8 @@ window.onload = async () => {
 
             if(!isCollectionEmpty())
                 createPanes(getSavedLinks());
+
+            collectionLoader.style.display = 'none';
         }
 
         if(localStorage.getItem('sortPreference'))

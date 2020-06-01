@@ -236,7 +236,7 @@
     const logoutBtn = document.querySelector('#logout-btn');
 
     logoutBtn.addEventListener('click', () => {
-        localStorage.clear();
+        localStorage.setItem('savedLinks', '[]');
         window.location.href = '/sign-out';
     });
 </script>
