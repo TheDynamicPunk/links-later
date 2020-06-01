@@ -17,7 +17,6 @@
 <body>
     <div class="modal-wrapper"></div>
     <div class="navbar"></div>
-    <div class="login_window hide"></div>
     
     <section id="input-section">
         <h1 style="text-align: center;">Paste links to track here, separated by comma 👇🏻</h1>
@@ -51,7 +50,8 @@
             </div>
             <div class="number-of-links"></div>
         </div>
-        <p style="text-align: center; padding-top: 2em; font-size: 1.2rem;" class="no-links-prompt">No links to show... Add some links above to see them here!</p>
+        <p style="text-align: center; padding-top: 2em; font-size: 1.2rem; display: none;" class="no-links-prompt">No links to show... Add some links above to see them here!</p>
+        <div class="collection-loader"><div class="lds-ring"><div></div><div></div><div></div><div></div></div></div>
         <div class="collection">
             <!-- Sample Pane for CSS Manipulations -->
             <!-- <div class="pane">
@@ -94,7 +94,7 @@
         $('.navbar').load('navbar.html');
         $('.footer').load('footer.html');
         $('.toast-wrapper').load('toast.html');
-        $('.login_window').load('loginForm.html');
+        $('.modal-wrapper').load('modal.html');
         
         let timerId;
 

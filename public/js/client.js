@@ -1,4 +1,5 @@
 let loader = document.querySelector('.loader');
+let collectionLoader = document.querySelector('.collection-loader');
 
 function pressedEnter(e) {
     e.preventDefault();
@@ -369,6 +370,8 @@ window.onload = async () => {
             if(data.length !== 0) {
                 console.log('after getting data!');
                 createPanes(data);
+                collectionLoader.style.display = 'none';
+                isCollectionEmpty();
             }
         }
         else {
