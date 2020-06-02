@@ -62,6 +62,44 @@ function clearInput() {
     document.querySelector('#links-input').innerHTML = '';
 }
 
+function createSyncModal(links) {
+    
+    console.log('Creating modal!');
+
+    document.querySelector('.modal .image img').setAttribute('src', 'assets/sync.svg');
+    document.querySelector('.modal .modal-content h1').textContent = 'Sync links with cloud?';
+    
+    let content = 'Following links are not synced with your account<ul style="margin-top: 1em; margin-left: 1.5em">';
+    
+    links.forEach( item => {
+        if(item.pageTitle)
+            content += `<li>${item.pageTitle}</li>`;
+        else
+            content += `<li>${item.url}</li>`;
+    });
+
+    content += '</ul><br><div style="display: flex; align-items: center; justify-content: center"><button class="btn1">Sync</button></div>';
+
+    document.querySelector('.modal .modal-content p').innerHTML = content;
+    document.querySelector('.modal-container').classList.remove('close');
+
+    document.querySelector('.modal button').addEventListener('click', async () => {
+
+        document.querySelector('.modal-container').classList.add('close');
+
+        const data = await syncWithServer(getSavedLinks(), 'add');
+
+        updateNoOfLinks();
+
+        if(data.length !== 0) {
+            console.log('after getting data!');
+            createPanes(data);
+            collectionLoader.style.display = 'none';
+            isCollectionEmpty();
+        }
+    });
+}
+
 function makeToast(content, btn, showCloseBtn) {
     let toast = document.createElement('div');
     toast.className = 'toast';
@@ -363,21 +401,32 @@ window.onload = async () => {
         const response = await fetch('/get-data');
         const userData = await response.json();
 
+        // Check if user is logged in
         if(!userData.err) {
             console.log('In if block!');
             console.log('userData: ', userData);
 
-            const data = await syncWithServer(getSavedLinks(), 'add');
+            // Check if any value in local that doesn't match with cloud
+            let result = _.differenceBy(getSavedLinks(), userData.links, 'url');
 
-            updateNoOfLinks();
+            // Check if user has unsaved local links different from ones in the cloud
+            if(result.length !== 0)
+            {
+                console.log('diff result: ', result);
+                createSyncModal(result);
+            }
 
-            if(data.length !== 0) {
+            if(userData.links.length !== 0) {
                 console.log('after getting data!');
-                createPanes(data);
+                createPanes(userData.links);
                 collectionLoader.style.display = 'none';
+                localStorage.setItem('savedLinks', JSON.stringify(userData.links));
+                updateNoOfLinks();
                 isCollectionEmpty();
             }
         }
+
+        // If user not logged in
         else {
             console.log(userData.err);
             updateNoOfLinks();

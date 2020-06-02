@@ -32,8 +32,6 @@ h1 {
 .btn1 {
     text-decoration: none;
     cursor: pointer;
-    /* margin-left: 0.9em; */
-    margin-bottom: 1em;
     padding: 0.5em 1.5em;
     border-radius: 20px;
     background-color: white;
@@ -169,6 +167,7 @@ select {
 
 .cta-btns {
     margin-left: 1em;
+    margin-bottom: 1em;
 }
 
 .cta-btns button:not(:first-child) {
