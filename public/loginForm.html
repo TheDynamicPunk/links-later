@@ -14,17 +14,17 @@
             <div class="form-content">
                 <form id="login-form">
                     <label for="userEmail"><b>Your email or username</b></label>
-                    <input type="email" name="userEmail" placeholder="Enter your email">
+                    <input type="email" name="userEmail" placeholder="Enter your email" required>
                     <label for="userPassword"><b>Your password</b></label>
-                    <input type="password" name="userPassword" id="userPassword" placeholder="Enter your password">
+                    <input type="password" name="userPassword" id="userPassword" placeholder="Enter your password" required>
                     <div class="cta-options">
                         <a class="btn2" href="#">Forgot password?</a>
-                        <a class="btn2" href="signupForm.html">Sign Up instead?</a>
                     </div>
                     <div class="form-btns">
-                        <input type="reset" value="Reset">
                         <input type="submit" value="Login">
+                        <span style="margin-left: 1em;">New User? <a class="btn2" href="signupForm.html">Sign Up!</a></span>
                     </div>
+                    <div class="loader" style="display: none;"><div class="lds-dual-ring"></div></div>
                 </form>
             </div>
         </div>
@@ -125,6 +125,11 @@
     .form-btns input:last-child {
         margin-left: 1em;
     }
+    .loader {
+        grid-column: 1/3;
+        margin: 0 auto;
+        margin-top: 1em;
+    }
 
     @media screen and (max-width: 768px) {
         .login-container{
@@ -159,6 +164,32 @@
             margin-left: 0.2em;
         }
     }
+
+    /* For loader */
+    .lds-dual-ring {
+        display: inline-block;
+        width: 80px;
+        height: 50px;
+    }
+    .lds-dual-ring:after {
+        content: " ";
+        display: block;
+        width: 64px;
+        height: 64px;
+        margin: 8px;
+        border-radius: 50%;
+        border: 6px solid #252525;
+        border-color: #252525 transparent #252525 transparent;
+        animation: lds-dual-ring 1.2s linear infinite;
+    }
+    @keyframes lds-dual-ring {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
 </style>
 <script>
 
@@ -170,6 +201,9 @@
 
     userForm.addEventListener('submit', async e => {
         e.preventDefault();
+
+        document.querySelector('.form-btns').style.display = 'none';
+        document.querySelector('.loader').style.display = '';
 
         const formData = new FormData(userForm);
         console.log(formData);
