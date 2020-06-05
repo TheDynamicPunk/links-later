@@ -37,11 +37,11 @@ async function previewLinks(links) {
                     let data = {
                         isProduct: true,
                         site: 'flipkart',
-                        itemName: itemName || 'Product Name',
-                        mrp: itemMRP || 'NA',
-                        price: itemPrice || 'NA',
+                        itemName: itemName || '',
+                        mrp: itemMRP || '',
+                        price: itemPrice || '',
                         url: item,
-                        pagethumbnailUrl: itemPictureUrl || './assets/image_not_found.svg',
+                        productImageUrl: itemPictureUrl || './assets/image_not_found.svg',
                         timestamp: Date.now()
                     }
     

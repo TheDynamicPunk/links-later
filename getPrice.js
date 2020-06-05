@@ -29,9 +29,9 @@ async function getPrice(links) {
                 // console.log(itemName);
 
                 let data = {
-                    itemName: itemName || 'Product Name',
-                    mrp: itemMRP || 'NA',
-                    price: itemPrice || 'NA',
+                    itemName: itemName || '',
+                    mrp: itemMRP || '',
+                    price: itemPrice || '',
                     url: item,
                     timestamp: Date.now()
                 }
