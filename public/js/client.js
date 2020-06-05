@@ -273,6 +273,64 @@ async function syncWithServer(linksData, options) {
     return await data;
 }
 
+async function refreshPrice(element) {
+
+    let paneContainer = element.parentNode.parentNode.parentNode;
+    let elementLoader = paneContainer.querySelector('.loader');
+    let priceField = paneContainer.querySelector('.price');
+    let mrpField = paneContainer.querySelector('.mrp');
+    let discountField = paneContainer.querySelector('.discount');
+    let productLink = paneContainer.querySelector('.cta-btns a').getAttribute('href');
+
+    element.style.display = 'none';
+    elementLoader.style.display = '';
+
+    let links = {
+        links: productLink,
+    };
+
+    const updatedPrice = await updatePrice(links);
+
+    if(updatedPrice)
+    {
+        let { price, mrp } = updatedPrice[0];
+        priceField.textContent = price;
+        mrpField.textContent = mrp;
+
+        let discount = (((mrp - price) / mrp) * 100).toFixed(0);
+        discountField.textContent = discount + '% off';
+    }
+    else {
+        console.log('error while getting new price!');
+        paneContainer.querySelector('.error-info').textContent = 'Can\'t get new prices! Please check your internet connection';
+        paneContainer.querySelector('.error-info').style.display = '';
+
+    }
+
+    element.style.display = '';
+    elementLoader.style.display = 'none';
+}
+
+async function updatePrice(links) {
+    try {
+        const response = await fetch('/api/refresh-price', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(links)
+        });
+
+        const data = await response.json();
+        console.log('new price: ', data);
+
+        return data;
+
+    } catch (err) {
+        console.log('Error while getting new price: ', err);
+    }
+}
+
 async function fetchLinks() {
     let linksInput = document.querySelector('#links-input') || document.querySelector('#links-input span');
 

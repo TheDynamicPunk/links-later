@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
 :root{
     --clr1: #eec643;
@@ -29,6 +30,16 @@ h1 {
     margin-top: 1em;
 }
 
+.error-info {
+    color: red;
+    background-color: #ffbcbc;
+    margin: 0.5em 1em;
+    width: max-content;
+    max-width: 90%;
+    padding: 0.2em 0.5em;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.9rem;
+}
 .btn1 {
     text-decoration: none;
     cursor: pointer;
@@ -163,6 +174,85 @@ select {
 
 .pane #timestamp::before {
     content: 'Added on: ';
+}
+
+.product-img {
+    width: 65%;
+    display: block;
+    margin: 1.5em auto;
+}
+.price-info {
+    margin: 0.8em 1.2em;
+}
+
+.refresh {
+    display: inline-block;
+    position: relative;
+    width: 30px;
+    height: 30px;
+}
+.price-info button {
+    position: absolute;
+    top: 0.7em;
+    left: 0;
+    background: none;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: #313131;
+}
+
+.price-info button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150%;
+    height: 150%;
+    background-color: #c0c0c0;
+    z-index: -1;
+    border-radius: 50%;
+    transform: translate(-12%, -20%);
+    opacity: 0;
+    transition: 0.3s ease;
+}
+
+.price-info button:hover::before {
+    opacity: 1;
+}
+
+.refresh .loader {
+    position: absolute;
+    top: 0.8em;
+    left: 0.2em;
+}
+
+.price-info .price {
+    font-size: 1.3rem;
+    font-weight: 500;
+}
+
+.price-info .price::before {
+    content: '₹';
+}
+
+.price-info .mrp {
+    margin-left: 0.5em;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: grey;
+    text-decoration: line-through;
+}
+
+.price-info .mrp::before {
+    content: '₹';
+}
+
+.price-info .discount {
+    margin-left: 0.5em;
+    color: green;
+    font-weight: 500;
 }
 
 .cta-btns {
@@ -392,5 +482,31 @@ select {
     }
     100% {
       transform: rotate(360deg);
+    }
+}
+
+/* Refresh loader */
+.lds-dual-ring {
+    display: inline-block;
+    width: 30px;
+    height: 17px;
+}
+.lds-dual-ring:after {
+    content: '';
+    display: block;
+    width: 15px;
+    height: 15px;
+    margin: 0px;
+    border-radius: 50%;
+    border: 2px solid #252525;
+    border-color: #252525 transparent #252525 transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
     }
 }

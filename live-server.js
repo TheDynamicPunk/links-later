@@ -13,6 +13,7 @@ const handleForm = require('./handleForm');
 const signupRoute = require('./routes/signup');
 const loginRoute = require('./routes/login');
 const fetchUserData = require('./routes/fetchUserData');
+const refreshPrice = require('./routes/priceRefresh');
 const updateUser = require('./routes/updateUserLinks');
 const signOutRoute = require('./routes/signout');
 
@@ -65,6 +66,7 @@ app.use('/signup', signupRoute);
 app.use('/login', loginRoute);
 app.use('/get-data', fetchUserData);
 app.use('/update-user', updateUser);
+app.use('/api', refreshPrice);
 
 app.get('/', (req, res) => {
     res.sendFile('public/linkslater.html', {root: __dirname});
