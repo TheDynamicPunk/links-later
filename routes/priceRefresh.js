@@ -1,9 +1,8 @@
 const router = require('express').Router();
-const getPrice = require('../getPrice');
+const getPrice = require('../scrapeProduct');
 
 router.post('/refresh-price', async (req, res) => {
     console.log('getting new prices!');
-    console.log(req.body.links);
 
     const response = await getPrice(req.body.links);
 

@@ -115,19 +115,19 @@ function makeToast(content, btn, showCloseBtn) {
     return toast.id;
 }
 
-function deletePane(element) {
-    let paneLink = element.previousSibling.getAttribute('href');
-    let pane = element.parentNode.parentNode.parentNode;
+function deletePane(paneRef) {
+    console.log(paneRef);
+    let paneLink = paneRef.querySelector('.cta-btns a').getAttribute('href');
 
     let toastId = makeToast('Link deleted', 'Undo', false);
 
-    pane.classList.add('delete-pane');
-    pane.addEventListener('animationend', () => {
-        pane.style.display = 'none';
+    paneRef.classList.add('delete-pane');
+    paneRef.addEventListener('animationend', () => {
+        paneRef.style.display = 'none';
     });
 
     let timerId = setTimeout( async () => {
-        pane.remove();
+        paneRef.remove();
         
         let data = getSavedLinks();
 
@@ -158,8 +158,8 @@ function deletePane(element) {
 
     document.querySelector(`#${toastId} button`).addEventListener('click', () => {
         clearTimeout(timerId);
-        pane.classList.remove('delete-pane');
-        pane.style.display = '';
+        paneRef.classList.remove('delete-pane');
+        paneRef.style.display = '';
         document.querySelector(`#${toastId}`).remove();
     })
 }
@@ -293,12 +293,19 @@ async function refreshPrice(element) {
 
     if(updatedPrice)
     {
-        let { price, mrp } = updatedPrice[0];
-        priceField.textContent = price;
-        mrpField.textContent = mrp;
+        let { price, mrp } = updatedPrice;
 
-        let discount = (((mrp - price) / mrp) * 100).toFixed(0);
-        discountField.textContent = discount + '% off';
+        if(mrp)
+        {
+            priceField.textContent = price;
+            mrpField.textContent = mrp;
+
+            let discount = (((mrp - price) / mrp) * 100).toFixed(0);
+            discountField.textContent = discount + '% off';
+        }
+        else {
+            priceField.textContent = price;
+        }
     }
     else {
         console.log('error while getting new price!');
@@ -386,70 +393,108 @@ function createPanes(data) {
 
     data.forEach( item => {
 
-        //Create new pane div
-        let newPane = document.createElement('div');
-        newPane.classList.add('pane');
+        console.log(item);
+        if(item.isProduct)
+        {
+            let pane = `<div class="pane">
+                            <img class="product-img" src="${item.productImageUrl}" alt="product-image">
+                            <div class="pane-container">
+                                <div id="timestamp">${parseTimestamp(item.timestamp)}</div>
+                                <h3 class="title">${item.itemName}</h3>
+                                <img class="source-logo" src="./assets/flipkart-icon.png" alt="flipkart-logo">
+                                <div class="price-info">
+                                    <div class="refresh">
+                                        <button title="Refresh Price" onclick="refreshPrice(this)"><i class="fas fa-sync-alt"></i></button>
+                                        <span class="loader" style="display: none;"><div class="lds-dual-ring"></div></span>
+                                    </div>`;
+            if(item.mrp) {
+                console.log('item.mrp: ', item.mrp);
+                pane += `<span class="price">${item.price}</span>
+                        <span class="mrp">${item.mrp}</span>
+                        <span class="discount">${(((item.mrp - item.price) / item.mrp) * 100).toFixed(0)}% off</span>`
+            }
+            else {
+                console.log('item.mrp not present: ', item.mrp);
+                pane += `<span class="price">${item.price}</span>`;
+            }
 
-        //Create pane container
-        let paneContainer = document.createElement('div');
-        paneContainer.classList.add('pane-container');
+            pane += `</div>
+                    <div class="error-info" style="display: none;"></div>
+                    <div class="cta-btns">
+                        <a class="btn1" href=${item.url} target="blank">Open</a>
+                        <button class="btn1" id="deletePane" onclick="deletePane(this.parentNode.parentNode.parentNode)"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            </div>`;
 
-        //Create new anchor tag for video URL
-        let videoUrl = document.createElement('a');
-        videoUrl.classList.add('btn1');
-        videoUrl.setAttribute('href', item.url);
-        videoUrl.setAttribute('target', 'blank');
-        videoUrl.textContent = 'Open';
+            document.querySelector('.collection').innerHTML += pane;
+        }
+        else {
+            //Create new pane div
+            let newPane = document.createElement('div');
+            newPane.classList.add('pane');
 
-        //Create new image tag for cached preview image
-        let previewImg = document.createElement('img');
-        previewImg.setAttribute('src', item.pagethumbnailUrl);
-        previewImg.setAttribute('alt', 'link-preview');
+            //Create pane container
+            let paneContainer = document.createElement('div');
+            paneContainer.classList.add('pane-container');
 
-        //Create new h3 tag for displaying video title
-        let title = document.createElement('h3');
-        title.classList.add('title');
-        title.textContent = item.pageTitle;
+            //Create new anchor tag for video URL
+            let videoUrl = document.createElement('a');
+            videoUrl.classList.add('btn1');
+            videoUrl.setAttribute('href', item.url);
+            videoUrl.setAttribute('target', 'blank');
+            videoUrl.textContent = 'Open';
 
-        //Create new date field
-        let date = parseTimestamp(item.timestamp);
-        let dateAdded = document.createElement('div');
-        dateAdded.id = 'timestamp';
-        dateAdded.textContent = date;
+            //Create new image tag for cached preview image
+            let previewImg = document.createElement('img');
+            previewImg.setAttribute('src', item.pagethumbnailUrl);
+            previewImg.setAttribute('alt', 'link-preview');
 
-        //Create new p tag for video description
-        let description = document.createElement('p');
-        description.classList.add('description');
-        description.textContent = item.pageDescription;
+            //Create new h3 tag for displaying video title
+            let title = document.createElement('h3');
+            title.classList.add('title');
+            title.textContent = item.pageTitle;
 
-        //Create new button tag for delete pane
-        let delBtn = document.createElement('button');
-        delBtn.id = 'deletePane';
-        delBtn.classList.add('btn1');
-        delBtn.setAttribute('onClick', 'deletePane(this)');
+            //Create new date field
+            let date = parseTimestamp(item.timestamp);
+            let dateAdded = document.createElement('div');
+            dateAdded.id = 'timestamp';
+            dateAdded.textContent = date;
 
-        //Create cta-btns class to hold the 2 buttons
-        let cta_btns = document.createElement('div');
-        cta_btns.classList.add('cta-btns');
+            //Create new p tag for video description
+            let description = document.createElement('p');
+            description.classList.add('description');
+            description.textContent = item.pageDescription;
 
-        //Create new fontawesome trash icon for delete button
-        let trashIcon = document.createElement('i');
-        trashIcon.classList.add('fas');
-        trashIcon.classList.add('fa-trash');
+            //Create new button tag for delete pane
+            let delBtn = document.createElement('button');
+            delBtn.id = 'deletePane';
+            delBtn.classList.add('btn1');
+            delBtn.setAttribute('onClick', 'deletePane(this.parentNode.parentNode.parentNode)');
 
-        //Assemble all parts to make pane div
-        delBtn.appendChild(trashIcon);
-        newPane.appendChild(previewImg);
-        paneContainer.appendChild(dateAdded);
-        paneContainer.appendChild(title);
-        paneContainer.appendChild(description);
-        cta_btns.appendChild(videoUrl);
-        cta_btns.appendChild(delBtn);
-        paneContainer.appendChild(cta_btns);
-        newPane.appendChild(paneContainer);
+            //Create cta-btns class to hold the 2 buttons
+            let cta_btns = document.createElement('div');
+            cta_btns.classList.add('cta-btns');
 
-        //Render new element in DOM
-        document.querySelector('.collection').prepend(newPane);
+            //Create new fontawesome trash icon for delete button
+            let trashIcon = document.createElement('i');
+            trashIcon.classList.add('fas');
+            trashIcon.classList.add('fa-trash');
+
+            //Assemble all parts to make pane div
+            delBtn.appendChild(trashIcon);
+            newPane.appendChild(previewImg);
+            paneContainer.appendChild(dateAdded);
+            paneContainer.appendChild(title);
+            paneContainer.appendChild(description);
+            cta_btns.appendChild(videoUrl);
+            cta_btns.appendChild(delBtn);
+            paneContainer.appendChild(cta_btns);
+            newPane.appendChild(paneContainer);
+
+            //Render new element in DOM
+            document.querySelector('.collection').prepend(newPane);
+        }
     });
 }
 

@@ -147,6 +147,7 @@ select {
 }
 
 .pane {
+    position: relative;
     -webkit-box-shadow: 5px 0px 26px 5px rgba(0,0,0,0.43);
     -moz-box-shadow: 5px 0px 26px 5px rgba(0,0,0,0.43);
     box-shadow: 5px 0px 26px 5px rgba(0,0,0,0.43);
@@ -176,13 +177,20 @@ select {
     content: 'Added on: ';
 }
 
+.source-logo {
+    width: 30%;
+    margin: 0.3em 1.3em;
+}
+
 .product-img {
-    width: 65%;
+    width: auto;
+    max-height: 280px;
     display: block;
     margin: 1.5em auto;
 }
 .price-info {
-    margin: 0.8em 1.2em;
+    margin: 0 1.2em;
+    margin-bottom: 1em;
 }
 
 .refresh {
