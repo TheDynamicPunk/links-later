@@ -1,5 +1,6 @@
 const request = require('request-promise');
 const cheerio = require('cheerio');
+const scrapeProduct = require('./scrapeProduct');
 
 async function previewLinks(links) {
 
@@ -13,42 +14,8 @@ async function previewLinks(links) {
             if(item.includes('www.flipkart.com'))
             {
                 console.log('Flipkart Link: ', item.includes('www.flipkart.com'));
-
-                try {
-                    const response = await request({
-                        uri: item,
-                        headers: {
-                            "Accept-Language": "en-US,en;q=0.5",
-                            // "Accept-Encoding": "gzip, deflate, br",
-                        },
-                    });
-    
-                    let $ = cheerio.load(response);
-                    
-                    let itemPrice = $('._1vC4OE').text().replace(/\D/g , '');
-                    console.log(itemPrice);
-                    let itemMRP = $('._3auQ3N').text().replace(/\D/g, '');
-                    console.log(itemMRP);
-                    let itemName = $('._35KyD6').text();
-                    console.log(itemName);
-                    let itemPictureUrl = $('._1k8TbK').attr('src');
-                    console.log(itemPictureUrl);
-
-                    let data = {
-                        isProduct: true,
-                        site: 'flipkart',
-                        itemName: itemName || '',
-                        mrp: itemMRP || '',
-                        price: itemPrice || '',
-                        url: item,
-                        productImageUrl: itemPictureUrl || './assets/image_not_found.svg',
-                        timestamp: Date.now()
-                    }
-    
-                    linkData.push(data);
-                } catch (err) {
-                    console.log('Error while scraping: ', err);
-                }
+                let productData = await scrapeProduct(item);
+                linkData.push(productData);
             }
 
             else {
