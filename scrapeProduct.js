@@ -17,7 +17,7 @@ async function scrapeProduct(links) {
                 
                 let data = await page.evaluate(() => {
 
-                    let price, mrp, itemName, productImageUrl;
+                    let price, mrp, itemName;
             
                     document.querySelector('._3qQ9m1') ? price = document.querySelector('._3qQ9m1').textContent.replace(/\D/g , '') : '';
                     document.querySelector('._1POkHg') ? mrp = document.querySelector('._1POkHg').textContent.replace(/\D/g , '') : '';
