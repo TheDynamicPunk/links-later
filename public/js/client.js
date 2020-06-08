@@ -396,10 +396,10 @@ function createPanes(data) {
         console.log(item);
         if(item.isProduct)
         {
-            let pane = `<div class="pane">
+            let pane = `<div class="product">
                             <img class="product-img" src="${item.productImageUrl}" alt="product-image">
-                            <div class="pane-container">
-                                <div id="timestamp">${parseTimestamp(item.timestamp)}</div>
+                            <div class="product-container">
+                                <div class="timestamp">${parseTimestamp(item.timestamp)}</div>
                                 <h3 class="title">${item.itemName}</h3>
                                 <img class="source-logo" src="./assets/flipkart-icon.png" alt="flipkart-logo">
                                 <div class="price-info">
@@ -458,7 +458,7 @@ function createPanes(data) {
             //Create new date field
             let date = parseTimestamp(item.timestamp);
             let dateAdded = document.createElement('div');
-            dateAdded.id = 'timestamp';
+            dateAdded.classList.add('timestamp');
             dateAdded.textContent = date;
 
             //Create new p tag for video description

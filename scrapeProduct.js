@@ -23,11 +23,7 @@ async function scrapeProduct(links) {
                     document.querySelector('._1POkHg') ? mrp = document.querySelector('._1POkHg').textContent.replace(/\D/g , '') : '';
                     document.querySelector('._35KyD6') ? itemName = document.querySelector('._35KyD6').textContent : '';
 
-                    let imgs = document.querySelectorAll('img');
-                    let imgSources = [];
-                    imgs.forEach( item => {
-                        imgSources.push(item.getAttribute('src'));
-                    });
+                    let imgSrc = (document.querySelectorAll('img')).item(2).getAttribute('src');
 
                     return {
                         isProduct: true,
@@ -35,7 +31,7 @@ async function scrapeProduct(links) {
                         itemName: itemName || '',
                         mrp: mrp || '',
                         price: price || '',
-                        productImageUrl: imgSources[2] || './assets/image_not_found.svg',
+                        productImageUrl: imgSrc || './assets/image_not_found.svg',
                         timestamp: Date.now()
                     }
                 });
