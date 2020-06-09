@@ -24,6 +24,7 @@
                         <input type="submit" value="Login">
                         <span style="margin-left: 1em;">New User? <a class="btn2" href="signupForm.html">Sign Up!</a></span>
                     </div>
+                    <div class="error" style="display: none;"></div>
                     <div class="loader" style="display: none;"><div class="lds-dual-ring"></div></div>
                 </form>
             </div>
@@ -41,6 +42,14 @@
     }
     .close-btn:hover {
         color: black;
+    }
+    .error {
+        background-color: #ff5050;
+        padding: 0.5em;
+        width: 100%;
+        grid-column: 1/-1;
+        color: white;
+        font-weight: 500;
     }
     .hide {
         display: none;
@@ -204,6 +213,7 @@
 
         document.querySelector('.form-btns').style.display = 'none';
         document.querySelector('.loader').style.display = '';
+        document.querySelector('.error').style.display = 'none';
 
         const formData = new FormData(userForm);
         console.log(formData);
@@ -218,8 +228,20 @@
             body: searchParams,
         });
 
-        console.log(response.url);
-        window.location.href = response.url;
+        if(response.status === 200)
+        {
+            console.log(response.url);
+            window.location.href = response.url;
+        }
+        else {
+            document.querySelector('.form-btns').style.display = '';
+            document.querySelector('.loader').style.display = 'none';
+            
+            let { err } = await response.json();
+            let errorDiv = document.querySelector('.error');
+            errorDiv.textContent = err;
+            errorDiv.style.display = '';
+        }
     })
 </script>
 </html>

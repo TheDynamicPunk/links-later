@@ -194,6 +194,7 @@ select {
 }
 .product-img {
     width: auto;
+    max-width: 90%;
     max-height: 280px;
     display: block;
     margin: 1.5em auto;

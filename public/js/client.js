@@ -396,17 +396,16 @@ function createPanes(data) {
         console.log(item);
         if(item.isProduct)
         {
-            let pane = `<div class="product">
-                            <img class="product-img" src="${item.productImageUrl}" alt="product-image">
-                            <div class="product-container">
-                                <div class="timestamp">${parseTimestamp(item.timestamp)}</div>
-                                <h3 class="title">${item.itemName}</h3>
-                                <img class="source-logo" src="./assets/flipkart-icon.png" alt="flipkart-logo">
-                                <div class="price-info">
-                                    <div class="refresh">
-                                        <button title="Refresh Price" onclick="refreshPrice(this)"><i class="fas fa-sync-alt"></i></button>
-                                        <span class="loader" style="display: none;"><div class="lds-dual-ring"></div></span>
-                                    </div>`;
+            let pane =  `<img class="product-img" src="${item.productImageUrl}" alt="product-image">
+                        <div class="product-container">
+                            <div class="timestamp">${parseTimestamp(item.timestamp)}</div>
+                            <h3 class="title">${item.itemName}</h3>
+                            <img class="source-logo" src="./assets/flipkart-icon.png" alt="flipkart-logo">
+                            <div class="price-info">
+                                <div class="refresh">
+                                    <button title="Refresh Price" onclick="refreshPrice(this)"><i class="fas fa-sync-alt"></i></button>
+                                    <span class="loader" style="display: none;"><div class="lds-dual-ring"></div></span>
+                                </div>`;
             if(item.mrp) {
                 console.log('item.mrp: ', item.mrp);
                 pane += `<span class="price">${item.price}</span>
@@ -424,10 +423,13 @@ function createPanes(data) {
                         <a class="btn1" href=${item.url} target="blank">Open</a>
                         <button class="btn1" id="deletePane" onclick="deletePane(this.parentNode.parentNode.parentNode)"><i class="fas fa-trash"></i></button>
                     </div>
-                </div>
-            </div>`;
+                </div>`;
+                
+            let productDiv = document.createElement('div');
+            productDiv.classList.add('product');
+            productDiv.innerHTML = pane;
 
-            document.querySelector('.collection').innerHTML += pane;
+            document.querySelector('.collection').prepend(productDiv);
         }
         else {
             //Create new pane div

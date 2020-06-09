@@ -44,11 +44,11 @@ router.post('/', [
             console.log('Login success!');
         }
         else {
-            res.status(400).send('This email and password combination doesn\'t exist!');
+            res.status(400).json({err: 'This email and password combination doesn\'t exist!'});
         }
     } 
     else {
-        res.status(400).send('Account not found!');
+        res.status(400).json({err: 'Account not found!'});
     }
 });
 
