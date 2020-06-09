@@ -12,7 +12,7 @@ async function scrapeProduct(links) {
 
         for (let item of linksArray) {
 
-            if (item.includes('www.flipkart.com')) {
+            if (item.includes('flipkart.com')) {
                 await page.goto(item);
                 
                 let data = await page.evaluate(() => {
@@ -28,6 +28,33 @@ async function scrapeProduct(links) {
                     return {
                         isProduct: true,
                         site: 'flipkart',
+                        itemName: itemName || '',
+                        mrp: mrp || '',
+                        price: price || '',
+                        productImageUrl: imgSrc || './assets/image_not_found.svg',
+                        timestamp: Date.now()
+                    }
+                });
+                
+                data.url = item;
+                console.log(data);
+                return data;
+            }
+
+            else if (item.includes('amazon.'))
+            {
+                await page.goto(item);
+
+                let data = await page.evaluate(() => {
+
+                    price = document.querySelector('#priceblock_ourprice').textContent.replace(/\D/g , '').slice(0, -2);
+                    mrp = document.querySelector('.priceBlockStrikePriceString').textContent.replace(/\D/g , '').slice(0, -2);
+                    itemName = document.querySelector('#productTitle').textContent.trim();
+                    imgSrc = document.querySelector('#landingImage').getAttribute('src');
+
+                    return {
+                        isProduct: true,
+                        site: 'amazon',
                         itemName: itemName || '',
                         mrp: mrp || '',
                         price: price || '',

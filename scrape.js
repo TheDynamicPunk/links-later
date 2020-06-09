@@ -11,9 +11,8 @@ async function previewLinks(links) {
 
         for (item of linksArray) {
 
-            if(item.includes('www.flipkart.com'))
+            if(item.includes('www.flipkart.com') || item.includes('amazon.'))
             {
-                console.log('Flipkart Link: ', item.includes('www.flipkart.com'));
                 let productData = await scrapeProduct(item);
                 linkData.push(productData);
             }

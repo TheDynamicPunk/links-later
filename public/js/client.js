@@ -399,13 +399,21 @@ function createPanes(data) {
             let pane =  `<img class="product-img" src="${item.productImageUrl}" alt="product-image">
                         <div class="product-container">
                             <div class="timestamp">${parseTimestamp(item.timestamp)}</div>
-                            <h3 class="title">${item.itemName}</h3>
-                            <img class="source-logo" src="./assets/flipkart-icon.png" alt="flipkart-logo">
-                            <div class="price-info">
-                                <div class="refresh">
-                                    <button title="Refresh Price" onclick="refreshPrice(this)"><i class="fas fa-sync-alt"></i></button>
-                                    <span class="loader" style="display: none;"><div class="lds-dual-ring"></div></span>
-                                </div>`;
+                            <h3 class="title">${item.itemName}</h3>`;
+            if(item.site === 'flipkart')
+            {
+                pane += `<img class="source-logo" src="./assets/flipkart-icon.png" alt="flipkart-logo">`;
+            }
+            else {
+                pane += `<img class="source-logo" src="./assets/amazon-icon.png" alt="amazon-logo">`;
+            }
+
+            pane += `<div class="price-info">
+                        <div class="refresh">
+                            <button title="Refresh Price" onclick="refreshPrice(this)"><i class="fas fa-sync-alt"></i></button>
+                            <span class="loader" style="display: none;"><div class="lds-dual-ring"></div></span>
+                        </div>`;
+                        
             if(item.mrp) {
                 console.log('item.mrp: ', item.mrp);
                 pane += `<span class="price">${item.price}</span>
@@ -424,7 +432,7 @@ function createPanes(data) {
                         <button class="btn1" id="deletePane" onclick="deletePane(this.parentNode.parentNode.parentNode)"><i class="fas fa-trash"></i></button>
                     </div>
                 </div>`;
-                
+
             let productDiv = document.createElement('div');
             productDiv.classList.add('product');
             productDiv.innerHTML = pane;
