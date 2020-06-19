@@ -1,14 +1,23 @@
 const puppeteer = require('puppeteer');
 
-async function scrapeProduct(links) {
+async function scrapeProduct(links, options) {
 
     console.log('In getPrice v2');
 
     let linksArray = links.split(',');
 
     try {
+        let result = new Array();
         const browser = await puppeteer.launch({args: ['--no-sandbox']});
         const page = await browser.newPage();
+        // await page.setRequestInterception(true);
+
+        // page.on('request', req => {
+        //     if(req.resourceType() === 'font' || req.resourceType() === 'stylesheet')
+        //         req.abort();
+        //     else
+        //         req.continue();
+        // })
 
         for (let item of linksArray) {
 
@@ -23,7 +32,7 @@ async function scrapeProduct(links) {
                     document.querySelector('._1POkHg') ? mrp = document.querySelector('._1POkHg').textContent.replace(/\D/g , '') : '';
                     document.querySelector('._35KyD6') ? itemName = document.querySelector('._35KyD6').textContent : '';
 
-                    let imgSrc = (document.querySelectorAll('img')).item(2).getAttribute('src');
+                    let imgSrc = document.querySelectorAll('img').item(2).getAttribute('src');
 
                     return {
                         isProduct: true,
@@ -38,7 +47,8 @@ async function scrapeProduct(links) {
                 
                 data.url = item;
                 console.log(data);
-                return data;
+
+                result.push(data);
             }
 
             else if (item.includes('amazon.'))
@@ -65,9 +75,12 @@ async function scrapeProduct(links) {
 
                 data.url = item;
                 console.log(data);
-                return data;
+                result.push(data);
             }
         }
+
+        return result;
+
     } catch (err) {
         console.log('Error occurred while fetching product details: ', err);
     }

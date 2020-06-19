@@ -4,7 +4,9 @@ const scrapeProduct = require('./scrapeProduct');
 
 async function previewLinks(links) {
 
-    if(links)
+    console.log(links.length);
+
+    if(links.length !== 0)
     {
         let linkData = [];
         let linksArray = links.split(',');
@@ -14,7 +16,7 @@ async function previewLinks(links) {
             if(item.includes('www.flipkart.com') || item.includes('amazon.'))
             {
                 let productData = await scrapeProduct(item);
-                linkData.push(productData);
+                linkData.push(productData[0]);
             }
 
             else {

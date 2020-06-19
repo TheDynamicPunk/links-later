@@ -293,7 +293,7 @@ async function refreshPrice(element) {
 
     if(updatedPrice)
     {
-        let { price, mrp } = updatedPrice;
+        let { price, mrp } = updatedPrice[0];
 
         if(mrp)
         {
