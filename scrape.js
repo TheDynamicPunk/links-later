@@ -13,6 +13,8 @@ async function previewLinks(links) {
 
         for (item of linksArray) {
 
+            item = item.trim();
+
             if(item.includes('www.flipkart.com') || item.includes('amazon.'))
             {
                 let productData = await scrapeProduct(item);
