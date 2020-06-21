@@ -2,12 +2,12 @@ let loader = document.querySelector('.loader');
 let collectionLoader = document.querySelector('.collection-loader');
 
 function pressedEnter(e) {
-    e.preventDefault();
     
     let code = e.keyCode ? e.keyCode : e.which;
 
     if(code === 13)
     {
+        e.preventDefault();
         fetchLinks();
     }
 }
