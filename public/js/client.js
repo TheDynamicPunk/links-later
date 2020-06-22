@@ -392,8 +392,7 @@ function createPanes(data) {
     isCollectionEmpty();
 
     data.forEach( item => {
-
-        console.log(item);
+        
         if(item.isProduct)
         {
             let pane =  `<img class="product-img" src="${item.productImageUrl}" alt="product-image">
