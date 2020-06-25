@@ -67,7 +67,7 @@ function createSyncModal(links) {
     console.log('Creating modal!');
 
     document.querySelector('.modal .image img').setAttribute('src', 'assets/sync.svg');
-    document.querySelector('.modal .modal-content h1').textContent = 'Sync links with cloud?';
+    document.querySelector('.modal .modal-title').innerHTML = '<h1>Sync links with cloud?</h1>';
     
     let content = 'Following links are not synced with your account<ul style="margin-top: 1em; margin-left: 1.5em">';
     
@@ -78,12 +78,11 @@ function createSyncModal(links) {
             content += `<li>${item.url}</li>`;
     });
 
-    content += '</ul><br><div style="display: flex; align-items: center; justify-content: center"><button class="btn1">Sync</button></div>';
-
-    document.querySelector('.modal .modal-content p').innerHTML = content;
+    document.querySelector('.modal .modal-content').innerHTML = content;
     document.querySelector('.modal-container').classList.remove('close');
+    document.querySelector('.modal-btns').innerHTML = '<button id="sync-links" class="btn1">Sync</button>'
 
-    document.querySelector('.modal button').addEventListener('click', async () => {
+    document.querySelector('.modal-btns #sync-links').addEventListener('click', async () => {
 
         document.querySelector('.modal-container').classList.add('close');
 
