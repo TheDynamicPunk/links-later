@@ -6,55 +6,6 @@
     <link rel="stylesheet" href="css/style.css">
     <title>Sign Up | Links Later</title>
 </head>
-<body>
-    <div class="login-container">
-        <h2>Sign Up</h2>
-        <div class="form-content">
-            <form id="login-form">
-                <label for="userame"><b>Your username</b></label>
-                <input type="text" name="username" id="username" placeholder="Enter a cool username" 
-                    required
-                    pattern="^[a-zA-Z0-9_]+$"
-                    minlength="6"
-                    maxlength="25"
-                    title="Username should be alphanumeric with underscore and 6-25 characters long"
-                    autofocus
-                    autocomplete="off">
-
-                <label for="userEmail"><b>Your email</b></label>
-                <input type="email" name="userEmail" placeholder="Enter your sassy email"
-                required
-                maxlength="50"
-                title="Enter a valid email id">
-                
-                <label for="userPassword"><b>Your password</b></label>
-                <input type="password" name="userPassword" id="userPassword" placeholder="Enter a strong password"
-                required
-                minlength="6"
-                maxlength="20"
-                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*#?&].{6,19}$"
-                title="Password should contain atleast 1 uppercase, 1 lowercase letter and a number"
-                >
-                
-                <div class="visibility-toggle">
-                    <span>Show password </span>
-                    <label class="switch">
-                        <input type="checkbox">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-
-                <div class="cta-options">
-                    <p style="font-size: 0.9rem;">Already have account? <a class="btn2" href="loginForm.html">Login</a></p>
-                </div>
-                <div class="form-btns">
-                    <input type="reset" value="Reset">
-                    <input type="submit" value="Sign Up!">
-                </div>
-            </form>
-        </div>
-    </div>
-</body>
 <style>
     body {
         background-color: #ff9d00;
@@ -62,7 +13,7 @@
         background-attachment: fixed;
         background-size: cover;
     }
-    .login-container{
+    .signup-container{
         position: fixed;
         top: 50%;
         left: 50%;
@@ -80,7 +31,7 @@
     .btn2 {
         font-size: 0.8rem;
     }
-    #login-form {
+    #signup-form {
         margin: 2em 0;
         display: grid;
         grid-template-columns: auto 1fr;
@@ -198,14 +149,34 @@
         transform: translateX(22px);
     }
 
+    .email-sent {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .email-sent img{
+        width: 80%;
+        margin: 1em auto;
+    }
+    .email-sent h2, h4, p {
+        margin-bottom: 0.5em;
+    }
+
+    .loader {
+        grid-column: 1/3;
+        margin: 0.2em auto;
+    }
+
     /* For responsiveness */
     @media screen and (max-width: 768px) {
-        .login-container{
+        .signup-container{
             width: 85%
         }
     }
     @media  screen and (max-width: 600px) {
-        #login-form {
+        #signup-form {
             display: flex;
             gap: 0;
             flex-direction: column;
@@ -235,7 +206,77 @@
             margin-left: 0.2em;
         }
     }
+
+    /* For Loader */
+    .lds-ring {
+        width: 40px;
+        height: 40px;
+    }
+    .lds-ring div {
+        border-color: #e73752 transparent transparent transparent;
+    }
 </style>
+<body>
+    <div class="signup-container">
+        <div class="signup-content">
+            <h2>Sign Up</h2>
+            <div class="form-content">
+                <form id="signup-form">
+                    <label for="userame"><b>Your username</b></label>
+                    <input type="text" name="username" id="username" placeholder="Enter a cool username" 
+                        required
+                        pattern="^[a-zA-Z0-9_]+$"
+                        minlength="6"
+                        maxlength="25"
+                        title="Username should be alphanumeric with underscore and 6-25 characters long"
+                        autofocus
+                        autocomplete="off">
+    
+                    <label for="userEmail"><b>Your email</b></label>
+                    <input type="email" name="userEmail" placeholder="Enter your sassy email"
+                    required
+                    maxlength="50"
+                    title="Enter a valid email id">
+                    
+                    <label for="userPassword"><b>Your password</b></label>
+                    <input type="password" name="userPassword" id="userPassword" placeholder="Enter a strong password"
+                    required
+                    minlength="6"
+                    maxlength="20"
+                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*#?&].{6,19}$"
+                    title="Password should contain atleast 1 uppercase, 1 lowercase letter and a number"
+                    >
+                    
+                    <div class="visibility-toggle">
+                        <span>Show password </span>
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+    
+                    <div class="cta-options">
+                        <p style="font-size: 0.9rem;">Already have account? <a class="btn2" href="loginForm.html">Login</a></p>
+                    </div>
+                    <div class="form-btns">
+                        <input type="reset" value="Reset">
+                        <input type="submit" value="Sign Up!">
+                    </div>
+                    <div class="loader" style="display: none;">
+                        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="email-sent" style="display: none;">
+            <img src="./assets/mail-sent.svg" alt="Email sent. Please check your inbox for further details">
+            <h2>Email sent!</h2>
+            <h4 style="text-align: center;">We've mailed you a link to verify your account. Click the link and you'll be done 🤟</h4>
+            <p style="font-weight: 500; font-size: 1.25rem;">Welcome to the community!</p>
+        </div>
+    </div>
+</body>
 <script>
 
     document.querySelector('.switch').addEventListener('click', () => {
@@ -249,11 +290,17 @@
             pwdField.setAttribute('type', 'password');
     });
 
-    const userForm = document.querySelector('#login-form');
+    const userForm = document.querySelector('#signup-form');
 
     userForm.addEventListener('submit', async e => {
         e.preventDefault();
 
+        let formBtns = document.querySelector('.form-btns');
+        let loader = document.querySelector('.loader');
+        
+        formBtns.style.display = 'none';
+        loader.style.display = '';
+        
         //Ensure password is always type=password when submitting
         document.querySelector('#userPassword').setAttribute('type', 'password');
 
@@ -270,8 +317,15 @@
             body: searchParams,
         });
 
-        console.log(response.url);
-        window.location.href = response.url;
+        if(response.status === 200)
+        {
+            document.querySelector('.signup-content').style.display = 'none';
+            document.querySelector('.email-sent').style.display = '';
+        }
+        else {
+            formBtns.style.display = '';
+            loader.style.display = 'none';
+        }
     });
 </script>
 </html>

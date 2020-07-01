@@ -3,6 +3,7 @@ const User = require('../models/User');
 const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
 
 router.post('/', [
 
@@ -70,21 +71,59 @@ router.post('/', [
         password: hashedPassword
     });
 
-    await user.save();
+    const userAccount = await user.save();
 
     console.log('Fetching data from DB');
-    const userAccount = await User.findOne({email: req.body.userEmail});
-    const token = jwt.sign({_id: userAccount._id}, process.env.TOKEN_SECRET, {expiresIn: '1d'});
-    await User.updateOne({_id: userAccount._id}, {$push: {issuedTokens: {$each: [token]}}});
+    // const userAccount = await User.findOne({email: req.body.userEmail});
+    // const token = jwt.sign({_id: userAccount._id}, process.env.TOKEN_SECRET, {expiresIn: '1d'});
+    const emailToken = jwt.sign({_id: userAccount._id}, process.env.EMAIL_SECRET, {expiresIn: '6h'});
+    // await User.updateOne({_id: userAccount._id}, {$push: {issuedTokens: {$each: [token]}}});
 
-    res.cookie('auth_token', token, {
-        expires: new Date(Date.now() + (1 * 86400000)),
-        httpOnly: true,
-        sameSite: true,
+    console.log('host: ', req.get('host'));
+    console.log('origin: ', req.get('origin'));
+    
+    // const verificationUrl = `${req.get('origin')}/confirm-email/${emailToken}`;
+    const verificationUrl = `https://linkslater.herokuapp.com/confirm-email/${emailToken}`;
+
+    // create reusable transporter object using the default SMTP transport
+  	let transporter = nodemailer.createTransport({
+		host: 'smtp.gmail.com',
+		port: 587,
+		secure: false,
+		requireTLS: true,
+    	service: "gmail",
+    	auth: {
+      		user: process.env.AUTH_EMAIL, // username
+      		pass: process.env.AUTH_EMAIL_PASSWORD, // user password
+		}
+    });
+
+  	// send mail with defined transport object
+	let info = await transporter.sendMail({
+    	from: '"Login Assistant 👻"' + process.env.AUTH_EMAIL, // sender address
+    	to: req.body.userEmail, // list of receivers
+		subject: "Links Later Account Verification", // Subject line
+        html: `<b>Click <a target="blank" href="${verificationUrl}">here</a> to validate your account!</b>
+               <br>
+               <p>or Copy and paste this link in the browser
+               <br>
+               <b>${verificationUrl}</b>
+               </p>
+               <p>This link will automatically expire in 6 hours.`, // html body
+  	});
+
+    console.log("Message sent: %s", info.messageId);
+
+    res.send('Account successfully created!');
+    // console.log('sending auth token!');
+    // res.cookie('auth_token', token, {
+    //     expires: new Date(Date.now() + (1 * 86400000)),
+    //     httpOnly: true,
+    //     sameSite: true,
         
-        //Disable secure for localhost and enable for production!
-        secure: true
-    }).status(200).redirect('/');
+    //     //Disable secure for localhost and enable for production!
+    //     // secure: true
+    // }).status(200).redirect('/');
 });
 
 module.exports = router;

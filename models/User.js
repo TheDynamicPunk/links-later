@@ -11,6 +11,7 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
         max: 50,
+        unique: true,
     },
     password: {
         type: String,
@@ -33,6 +34,10 @@ const userSchema = mongoose.Schema({
     issuedTokens: {
         type: Array,
         default: []
+    },
+    isVerified: {
+        type: Boolean,
+        default: false,
     }
 });
 

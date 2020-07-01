@@ -8,9 +8,11 @@ const mongoose = require('mongoose');
 const port = process.env.PORT || 3000;
 const previewLinks = require('./scrape');
 const handleForm = require('./handleForm');
+// const updateProducts = require('./updateProducts');
 
 //Route handlers
 const signupRoute = require('./routes/signup');
+const verifyAccount = require('./routes/verifyEmailToken');
 const loginRoute = require('./routes/login');
 const fetchUserData = require('./routes/fetchUserData');
 const refreshPrice = require('./routes/priceRefresh');
@@ -20,7 +22,8 @@ const signOutRoute = require('./routes/signout');
 //Connect to DB
 mongoose.connect( process.env.DB_URL, {
         useNewUrlParser: true,
-        useUnifiedTopology: true 
+        useUnifiedTopology: true,
+        useCreateIndex: true
     }, () => {
       console.log("Connected to DB!");
     }
@@ -67,6 +70,7 @@ app.use('/login', loginRoute);
 app.use('/get-data', fetchUserData);
 app.use('/update-user', updateUser);
 app.use('/api', refreshPrice);
+app.use('/api', verifyAccount);
 
 app.get('/', (req, res) => {
     res.sendFile('public/linkslater.html', {root: __dirname});
@@ -104,6 +108,19 @@ app.post('/submit-form', [
     }
 });
 
+app.get('/confirm-email', (req, res) => {
+    res.sendFile('./public/confirmEmail.html', { root: __dirname});
+})
+app.get('/confirm-email/:token', (req, res) => {
+    console.log('sending confirm email page');
+    res.sendFile('./public/confirmEmail.html', { root: __dirname});
+});
+
+// cron.schedule('10 * * * * *', () => {
+//     console.log('Cron job to update products in cloud!');
+//     updateProducts();
+// });
+
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
-})
+});

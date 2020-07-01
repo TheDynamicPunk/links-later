@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Account Verification | Links Later</title>
+</head>
+<style>
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background: #FDC830;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #F37335, #FDC830);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #F37335, #FDC830); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background-repeat: no-repeat;
+        height: 100vh;
+    }
+    img {
+        width: 100%;
+    }
+    h2 {
+        margin: 0.5em;
+    }
+    p {
+        font-weight: 500;
+        margin: 0.5em;
+    }
+    .message {
+        max-width: 400px;
+        padding: 1em;
+        background-color: antiquewhite;
+        border-radius: 10px;
+        -webkit-box-shadow: 0px 0px 35px 0px rgba(0,0,0,1);
+        -moz-box-shadow: 0px 0px 35px 0px rgba(0,0,0,1);
+        box-shadow: 0px 0px 35px 0px rgba(0,0,0,1);
+        text-align: center;
+    }
+    .image {
+        width: 80%;
+        margin: 1em auto;
+    }
+    .actions {
+        margin: 1.5em;
+    }
+</style>
+<body>
+    <div class="message">
+        <div class="message-content">
+            <div class="image">
+                <img src="..\assets\verified.svg" alt="Verified">
+            </div>
+            <h2></h2>
+            <p class="description"></p>
+            <p class="further-steps"></p>
+            <div class="actions">
+                <a class="btn1" href="/loginForm.html">Login</a>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    let token = window.location.href.split('confirm-email/')[1];
+    console.log('token: ', token);
+    
+    if(token)
+    {
+        fetch(`/api/verify-account/${token}`)
+        .then( async (res) => {
+            if(res.status === 200)
+            {
+                document.querySelector('.image img').setAttribute('src', '../assets/verified.svg');
+                document.querySelector('.message h2').textContent = 'Email verified!';
+                document.querySelector('.description').textContent = 'Login and start saving some links!';
+                document.querySelector('.message').style.display = 'block';
+            }
+            else {
+                let data = await res.json();
+                console.log(data);
+                document.querySelector('.image img').setAttribute('src', '../assets/unverified.svg');
+                document.querySelector('.message h2').textContent = 'This link is expired';
+                document.querySelector('.description').textContent = `❌ ${data.err.message}`;
+                document.querySelector('.description').style.textTransform = 'capitalize';
+                document.querySelector('.further-steps').textContent = 'Please login again to get a new link for verifying your account 😊';
+                document.querySelector('.message').style.display = 'block';
+            }
+        })
+        .catch( err => {
+            console.error(err);
+        });
+    }
+</script>
+</html>
