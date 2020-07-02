@@ -9,6 +9,7 @@ router.post('/', hasToken, async (req, res) => {
     const { _id } = jwt.decode(req.cookies.auth_token);
     // console.log('req.user', req.user);
     const userAccount = await User.findOne({_id: _id});
+    await User.updateOne({_id: _id}, { lastUpdated: Date.now()});
 
     if(req.body.options === 'add')
     {
