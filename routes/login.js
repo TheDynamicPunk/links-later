@@ -6,11 +6,11 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 
 router.post('/', [
-    check('userEmail').isEmail().trim().escape().normalizeEmail(),
+    check('username').optional().trim().escape().matches(/^[a-zA-Z0-9_]+$/),
+    check('userEmail').optional().isEmail().trim().escape().normalizeEmail(),
     check('userPassword').trim().escape()
 ], async (req, res) => {
     console.log('inside login post');
-    // console.log('req: ', req.body);
 
     const validationErrors = validationResult(req);
     console.log('Validation Errors: ', validationErrors.errors);
@@ -22,7 +22,20 @@ router.post('/', [
 
     // Find if user exists in DB
     console.log('Fetching data from cloud!');
-    const userAccount = await User.findOne({email: req.body.userEmail});
+
+    let userAccount = '';
+
+    if(req.body.userEmail !== undefined) {
+        console.log('got useremail');
+        userAccount = await User.findOne({email: req.body.userEmail});
+    } else if(req.body.username !== undefined) {
+        console.log('got username');
+        userAccount = await User.findOne({username: req.body.username});
+    } else {
+        console.log('got nothing :(');
+        return res.status(400).json({err: 'Account not found!'});
+    }
+
     console.log('Fetched from cloud!');
     
     if(userAccount)
@@ -89,7 +102,7 @@ router.post('/', [
             }
         }
         else {
-            res.status(400).json({err: 'This email and password combination doesn\'t exist!'});
+            res.status(400).json({err: 'The given username/email and password combination doesn\'t exist!'});
         }
     } 
     else {
