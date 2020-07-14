@@ -20,8 +20,6 @@ function getDurationStamp(params) {
 
     let duration = (new Date() - params) / 1000;
 
-    console.log(`${duration}s`);
-
     if (duration < 60) {
 
         if(Math.ceil(duration) === 1)
