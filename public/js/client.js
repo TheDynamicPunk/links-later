@@ -31,7 +31,7 @@ function getDurationStamp(params) {
     }
     else if (duration > 60 && duration < 3600) {
         
-        let timeDuration = parseInt((Math.floor(duration) / 60).toPrecision());
+        let timeDuration = parseInt(Math.floor(duration / 60));
 
         if(timeDuration === 1)
             return `${timeDuration} minute ago`;
@@ -40,7 +40,7 @@ function getDurationStamp(params) {
     }
     else if (duration > 3600 && duration < 86400) {
 
-        let timeDuration = parseInt((Math.floor(duration) / 3600).toPrecision());
+        let timeDuration = parseInt(Math.floor(duration / 3600));
 
         if(timeDuration === 1)
             return `${timeDuration} hour ago`;
@@ -48,7 +48,7 @@ function getDurationStamp(params) {
             return `${timeDuration} hours ago`;
     }
     else if (duration > 86400 && duration < 2592000) {
-        let timeDuration = parseInt((Math.floor(duration) / 86400).toPrecision());
+        let timeDuration = parseInt(Math.floor(duration / 86400));
         
         if (timeDuration === 1) {
             return `${timeDuration} day ago`;
@@ -57,7 +57,7 @@ function getDurationStamp(params) {
         }
     }
     else if (duration > 2592000) {
-        let timeDuration = parseInt((Math.floor(duration) / 2592000).toPrecision());
+        let timeDuration = parseInt(Math.floor(duration / 2592000));
         
         if (timeDuration === 1) {
             return `${timeDuration} month ago`;
