@@ -16,6 +16,60 @@ function updateNoOfLinks() {
     document.querySelector('.number-of-links').textContent = 'Links collected: ' + getSavedLinks().length;
 }
 
+function getDurationStamp(params) {
+
+    let duration = (new Date() - params) / 1000;
+
+    console.log(`${duration}s`);
+
+    if (duration < 60) {
+
+        if(Math.ceil(duration) === 1)
+            return `${Math.ceil(duration)} second ago`;
+        else
+            return `${Math.ceil(duration)} seconds ago`;
+    }
+    else if (duration > 60 && duration < 3600) {
+        
+        let timeDuration = parseInt((Math.floor(duration) / 60).toPrecision(1));
+
+        if(timeDuration === 1)
+            return `${timeDuration} minute ago`;
+        else
+            return `${timeDuration} minutes ago`;
+    }
+    else if (duration > 3600 && duration < 86400) {
+
+        let timeDuration = parseInt((Math.floor(duration) / 3600).toPrecision(1));
+
+        if(timeDuration === 1)
+            return `${timeDuration} hour ago`;
+        else
+            return `${timeDuration} hours ago`;
+    }
+    else if (duration > 86400 && duration < 2592000) {
+        let timeDuration = parseInt((Math.floor(duration) / 86400).toPrecision(1));
+        
+        if (timeDuration === 1) {
+            return `${timeDuration} day ago`;
+        } else {
+            return `${timeDuration} days ago`;   
+        }
+    }
+    else if (duration > 2592000) {
+        let timeDuration = parseInt((Math.floor(duration) / 2592000).toPrecision(1));
+        
+        if (timeDuration === 1) {
+            return `${timeDuration} month ago`;
+        } else {
+            return `${timeDuration} months ago`;   
+        }
+    }
+    else {
+        return `NA`;
+    }
+}
+
 function parseTimestamp(params) {
 
     let linkDate = new Date(params);
@@ -396,7 +450,7 @@ function createPanes(data) {
         {
             let pane =  `<img class="product-img" src="${item.productImageUrl}" alt="product-image">
                         <div class="product-container">
-                            <div class="timestamp">${parseTimestamp(item.timestamp)}</div>
+                            <div class="timestamp" title="${parseTimestamp(item.timestamp)}">${getDurationStamp(item.timestamp)}</div>
                             <h3 class="title">${item.itemName}</h3>`;
             if(item.site === 'flipkart')
             {
@@ -465,9 +519,11 @@ function createPanes(data) {
 
             //Create new date field
             let date = parseTimestamp(item.timestamp);
+            let duration = getDurationStamp(item.timestamp);
             let dateAdded = document.createElement('div');
             dateAdded.classList.add('timestamp');
-            dateAdded.textContent = date;
+            dateAdded.setAttribute('title', date);
+            dateAdded.textContent = duration;
 
             //Create new p tag for video description
             let description = document.createElement('p');

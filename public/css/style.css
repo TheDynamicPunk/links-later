@@ -174,7 +174,7 @@ select {
 }
 
 .timestamp::before {
-    content: 'Added on: ';
+    content: 'Added: ';
 }
 
 .product {
@@ -367,9 +367,6 @@ select {
         margin-left: 45%;
         height: max-content;
         background-color: #424242;
-    }
-    .timestamp::before {
-        content: 'Added: ';
     }
     .pane-container h3 {
         margin-left: 45%;
