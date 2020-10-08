@@ -593,6 +593,7 @@ window.onload = async () => {
 
         // If user not logged in
         else {
+            getSavedLinks();
             console.log(userData.err);
             updateNoOfLinks();
 
