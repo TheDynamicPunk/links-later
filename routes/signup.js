@@ -93,23 +93,23 @@ router.post('/', [
 		requireTLS: true,
     	service: "gmail",
     	auth: {
-      		user: process.env.AUTH_EMAIL, // username
-      		pass: process.env.AUTH_EMAIL_PASSWORD, // user password
+      		user: process.env.AUTH_EMAIL,                   //Official Links Later account username
+      		pass: process.env.AUTH_EMAIL_PASSWORD,          //Official Links Later account password
 		}
     });
 
   	// send mail with defined transport object
-	let info = await transporter.sendMail({
-    	from: '"Login Assistant 👻"' + process.env.AUTH_EMAIL, // sender address
-    	to: req.body.userEmail, // list of receivers
-		subject: "Links Later Account Verification", // Subject line
+	let info = transporter.sendMail({
+    	from: '"Login Assistant 👻"' + process.env.AUTH_EMAIL,          // sender address
+    	to: req.body.userEmail,                                         // list of receivers
+		subject: "Links Later Account Verification",                    // Subject line
         html: `<b>Click <a target="blank" href="${verificationUrl}">here</a> to validate your account!</b>
                <br>
                <p>or Copy and paste this link in the browser
                <br>
                <b>${verificationUrl}</b>
                </p>
-               <p>This link will automatically expire in 6 hours.`, // html body
+               <p>This link will automatically expire in 6 hours.`,     // html body
   	});
 
     console.log("Message sent: %s", info.messageId);
