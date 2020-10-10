@@ -149,8 +149,8 @@
     function createModal(errors) {
 
         let modalImg = document.querySelector('.modal .image img');
-        let modalTitle = document.querySelector('.modal-content h1');
-        let modalContent = document.querySelector('.modal-content p');
+        let modalTitle = document.querySelector('.modal-title');
+        let modalContent = document.querySelector('.modal-content');
         let modalContainer = document.querySelector('.modal-container');
 
         modalContainer.classList.toggle('close');
@@ -159,8 +159,8 @@
         if(errors.length === 0)
         {
             modalImg.setAttribute('src', './assets/relax.svg');
-            modalTitle.textContent = 'Sent!';
-            modalContent.textContent = 'Now sit back and relax! We\'re working hard to address the issue and will get in touch if need be!';
+            modalTitle.innerHTML = '<h1>Sent!</h1>';
+            modalContent.innerHTML = '<p>Now sit back and relax! We\'re working hard to address the issue and will get in touch if need be!</p';
             document.querySelector('form').reset();
         } else {
             modalImg.setAttribute('src', './assets/sad.svg');
