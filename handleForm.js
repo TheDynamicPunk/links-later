@@ -2,7 +2,7 @@ const { GoogleSpreadsheet } = require('google-spreadsheet');
 require('dotenv').config();
 
 // spreadsheet key is the long id in the sheets URL
-const doc = new GoogleSpreadsheet('1qm57SG2oA62Wq99oFA40ljNNQzOLCcVmsvAZVYRYODw');
+const doc = new GoogleSpreadsheet(process.env.FORM_SPREADSHEET_LINK);
 
 async function handleForm(formData) {
     
