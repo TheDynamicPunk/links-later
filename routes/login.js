@@ -46,11 +46,11 @@ router.post('/', [
         {
             if(userAccount.isVerified)
             {
-                const token = jwt.sign({_id: userAccount._id}, process.env.TOKEN_SECRET, {expiresIn: '1d'});
+                const token = jwt.sign({_id: userAccount._id}, process.env.TOKEN_SECRET, {expiresIn: '7d'});
 
                 await User.updateOne({_id: userAccount._id}, {$push: {issuedTokens: {$each: [token]}}});
                 res.cookie('auth_token', token, {
-                    expires: new Date(Date.now() + (1 * 86400000)),
+                    expires: new Date(Date.now() + (7 * 86400000)),
                     httpOnly: true,
                     sameSite: true,
 
@@ -75,8 +75,8 @@ router.post('/', [
                     requireTLS: true,
                     service: "gmail",
                     auth: {
-                        user: process.env.AUTH_EMAIL, // username
-                        pass: process.env.AUTH_EMAIL_PASSWORD, // user password
+                        user: process.env.AUTH_EMAIL,               //Official Links Later account username
+                        pass: process.env.AUTH_EMAIL_PASSWORD,      //Official Links Later account password
                     }
                 });
 
