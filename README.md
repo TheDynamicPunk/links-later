@@ -12,3 +12,10 @@ Frustrated with multiple tabs when working on a serious bug or just saving links
 3. Product price tracking feature (currently supported with Amazon and Flipkart).
 4. Fully responsive site with different Desktop and Mobile views. Try it out!
 5. Fully functioning PWA functionality so as to create a homescreen shortcut, increasing ease of access.
+
+## Contributing
+Found a bug in the site? Want a new feature to be added? I highly encourage you to open issues for project improvement, sites not loading, feature suggestions etc,have discussions and arrive at solutions. Links later will be even better with your inputs and suggestions developing it's future!
+
+### Here are some basic guidelines for contribution and bug reporting
+- Please head over to issues to create an issue, which will be discussed and added to the new-feature list.
+- Also for the time being, pull requests to directly suggest a feature, by modifying the readme is welcome!
