@@ -6,4 +6,9 @@
 ## Introduction
 Frustrated with multiple tabs when working on a serious bug or just saving links for later, procrastinating you'll see them some day? Welcome Links Later! An effective solution to manage those gazillion tabs that you've set aside in your browser! Never leave your pc suffering again!
 
-Features:
+## Some features of the project:
+1. Self implemented authentication system based on JWTs for ease of access and modularity.
+2. Avoid spam account creation with the help of email verification.
+3. Product price tracking feature (currently supported with Amazon and Flipkart).
+4. Fully responsive site with different Desktop and Mobile views. Try it out!
+5. Fully functioning PWA functionality so as to create a homescreen shortcut, increasing ease of access.
