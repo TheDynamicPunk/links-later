@@ -19,3 +19,5 @@ Found a bug in the site? Want a new feature to be added? I highly encourage you 
 ### Here are some basic guidelines for contribution and bug reporting
 - Please head over to issues to create an issue, which will be discussed and added to the new-feature list.
 - Also for the time being, pull requests to directly suggest a feature, by modifying the readme is welcome!
+
+Please consider starring the repo if you love the idea and keep supporting the project!
