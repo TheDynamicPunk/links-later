@@ -65,7 +65,7 @@ router.post('/', [
                 const emailToken = jwt.sign({_id: userAccount._id}, process.env.EMAIL_SECRET, {expiresIn: '6h'});
 
                 // const verificationUrl = `${req.get('origin')}/confirm-email/${emailToken}`;
-                const verificationUrl = `https://linkslater.herokuapp.com/confirm-email/${emailToken}`;
+                const verificationUrl = `https://linkslater.onrender.com/confirm-email/${emailToken}`;
 
                 // create reusable transporter object using the default SMTP transport
                 let transporter = nodemailer.createTransport({
