@@ -8,7 +8,10 @@ const mongoose = require('mongoose');
 const port = process.env.PORT || 3000;
 const previewLinks = require('./scrape');
 const handleForm = require('./handleForm');
-// const updateProducts = require('./updateProducts');
+const environment = process.env.NODE_ENV;
+const isDevelopment = environment === 'development'
+
+console.log("environment:", environment);
 
 //Route handlers
 const signupRoute = require('./routes/signup');
@@ -29,15 +32,17 @@ mongoose.connect( process.env.DB_URL, {
     }
 );
 
-//Redirect all requests from http to https
-// app.use( function requireHTTPS(req, res, next) {
-//     // The 'x-forwarded-proto' check is for Heroku
-//     if (!req.secure && req.get('x-forwarded-proto') !== 'https')
-//     {
-//         return res.redirect('https://' + req.get('host') + req.url);
-//     }
-//     next();
-// });
+// Redirect all requests from http to https
+if (!isDevelopment) {
+    app.use( function requireHTTPS(req, res, next) {
+        // The 'x-forwarded-proto' check is for Heroku
+        if (!req.secure && req.get('x-forwarded-proto') !== 'https')
+        {
+            return res.redirect('https://' + req.get('host') + req.url);
+        }
+        next();
+    });
+}
 
 // Middlewares
 app.use(express.static('public'));
@@ -115,11 +120,6 @@ app.get('/confirm-email/:token', (req, res) => {
     console.log('sending confirm email page');
     res.sendFile('./public/confirmEmail.html', { root: __dirname});
 });
-
-// cron.schedule('10 * * * * *', () => {
-//     console.log('Cron job to update products in cloud!');
-//     updateProducts();
-// });
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
