@@ -65,7 +65,7 @@ router.post('/', [
                 const emailToken = jwt.sign({_id: userAccount._id}, process.env.EMAIL_SECRET, {expiresIn: '6h'});
 
                 // const verificationUrl = `${req.get('origin')}/confirm-email/${emailToken}`;
-                const verificationUrl = `https://linkslater.herokuapp.com/confirm-email/${emailToken}`;
+                const verificationUrl = `https://linkslater.onrender.com/confirm-email/${emailToken}`;
 
                 // create reusable transporter object using the default SMTP transport
                 let transporter = nodemailer.createTransport({
@@ -83,7 +83,7 @@ router.post('/', [
                 // send mail with defined transport object
                 let info = await transporter.sendMail({
                     from: '"Login Assistant 👻"' + process.env.AUTH_EMAIL, // sender address
-                    to: req.body.userEmail, // list of receivers
+                    to: userAccount.email, // list of receivers
                     subject: "Links Later Account Verification", // Subject line
                     html: `<b>Click <a target="blank" href="${verificationUrl}">here</a> to validate your account!</b>
                            <br>
