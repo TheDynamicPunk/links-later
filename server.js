@@ -21,6 +21,7 @@ const fetchUserData = require('./routes/fetchUserData');
 const refreshPrice = require('./routes/priceRefresh');
 const updateUser = require('./routes/updateUserLinks');
 const signOutRoute = require('./routes/signout');
+const refreshToken = require('./models/RefreshToken');
 
 //Connect to DB
 mongoose.connect( process.env.DB_URL, {
@@ -72,6 +73,7 @@ app.use(function (req, res, next) {
 app.use('/sign-out', signOutRoute);
 app.use('/signup', signupRoute);
 app.use('/login', loginRoute);
+app.use('/refresh-token', refreshToken);
 app.use('/get-data', fetchUserData);
 app.use('/update-user', updateUser);
 app.use('/api', refreshPrice);

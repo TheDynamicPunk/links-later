@@ -83,7 +83,7 @@ router.post('/', [
     console.log('origin: ', req.get('origin'));
     
     // const verificationUrl = `${req.get('origin')}/confirm-email/${emailToken}`;
-    const verificationUrl = `https://linkslater.onrender.com/confirm-email/${emailToken}`;
+    const verificationUrl = `${process.env.HOST_URL}/confirm-email/${emailToken}`;
 
     // create reusable transporter object using the default SMTP transport
   	let transporter = nodemailer.createTransport({

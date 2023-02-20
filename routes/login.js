@@ -1,9 +1,15 @@
+require('dotenv').config();
 const router = require('express').Router();
 const User = require('../models/User');
 const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
+const RefreshToken = require('../models/RefreshToken');
+
+const environment = process.env.NODE_ENV;
+const isDevelopment = environment === 'development'
+
 
 router.post('/', [
     check('username').optional().trim().escape().matches(/^[a-zA-Z0-9_]+$/),
@@ -46,18 +52,33 @@ router.post('/', [
         {
             if(userAccount.isVerified)
             {
-                const token = jwt.sign({_id: userAccount._id}, process.env.TOKEN_SECRET, {expiresIn: '7d'});
+                removeExpiredRefreshTokens(userAccount._id);
+                const token = jwt.sign({_id: userAccount._id}, process.env.TOKEN_SECRET, {expiresIn: process.env.TOKEN_TTL + 'ms'});
+
+                const refreshToken = await RefreshToken.createToken(userAccount);
 
                 await User.updateOne({_id: userAccount._id}, {$push: {issuedTokens: {$each: [token]}}});
+
                 res.cookie('auth_token', token, {
-                    expires: new Date(Date.now() + (7 * 86400000)),
+                    maxAge: parseInt(process.env.TOKEN_TTL),
                     httpOnly: true,
                     sameSite: true,
 
                     //Disable secure for localhost and enable for production!
-                    secure: true
-                }).status(200).redirect('/');
-                console.log('Login success!');
+                    secure: isDevelopment ? false : true
+                })
+                .cookie('refresh_token', refreshToken, {
+                    httpOnly: true,
+                    sameSite: true,
+
+                    //Disable secure for localhost and enable for production!
+                    secure: isDevelopment ? false : true
+                })
+                .status(200)
+                .json({
+                    message: 'login successful!'
+                });
+                console.log('login successful!');
             }
             else {
                 console.log('User e-mail not verified!');
@@ -65,7 +86,7 @@ router.post('/', [
                 const emailToken = jwt.sign({_id: userAccount._id}, process.env.EMAIL_SECRET, {expiresIn: '6h'});
 
                 // const verificationUrl = `${req.get('origin')}/confirm-email/${emailToken}`;
-                const verificationUrl = `https://linkslater.onrender.com/confirm-email/${emailToken}`;
+                const verificationUrl = `${process.env.HOST_URL}/confirm-email/${emailToken}`;
 
                 // create reusable transporter object using the default SMTP transport
                 let transporter = nodemailer.createTransport({
@@ -109,5 +130,20 @@ router.post('/', [
         res.status(400).json({err: 'Account not found!'});
     }
 });
+
+const removeExpiredRefreshTokens = async (userId) => {
+    let listOfRefreshTokens = await RefreshToken.find({user: userId});
+
+    console.log({listOfRefreshTokens})
+
+    if(listOfRefreshTokens.length > 0) {
+        listOfRefreshTokens.forEach(refreshToken => {
+            if (RefreshToken.verifyExpiration(refreshToken)) {
+                console.log("Deleting refresh token: ", refreshToken.token);
+                RefreshToken.deleteOne({ token: refreshToken.token }).exec();
+            }
+        });
+    }
+}
 
 module.exports = router;

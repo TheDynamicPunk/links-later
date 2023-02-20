@@ -198,10 +198,14 @@
     
     fetch('/get-data')
     .then( res => {
+        if(res.status != 200) {
+            throw 'status != 200';
+        }
         return res.json();
     }).then( data => {
         if(!data.err)
-        {    
+        {   
+            console.log(data); 
             console.log(data.username);
             document.querySelector('#action-btn').textContent = 'Hi, ';
             document.querySelector('#action-btn').textContent += data.username;
