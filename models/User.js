@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
@@ -11,7 +11,7 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
         max: 50,
-        unique: true,
+        unique: true
     },
     password: {
         type: String,
@@ -31,13 +31,9 @@ const userSchema = mongoose.Schema({
         type: Array,
         default: []
     },
-    issuedTokens: {
-        type: Array,
-        default: []
-    },
     isVerified: {
         type: Boolean,
-        default: false,
+        default: false
     }
 });
 

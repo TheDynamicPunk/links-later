@@ -1,47 +1,118 @@
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const BlacklistAuthToken = require('../models/BlacklistAuthToken');
+const RefreshToken = require('../models/RefreshToken');
+
+const environment = process.env.NODE_ENV;
+const isDevelopment = environment === 'development'
 
 // Middleware function for authenticating JWT
-module.exports = function (req, res, next) {
+module.exports = async function (req, res, next) {
 
     console.log('verifying token');
 
-    const token = req.cookies.auth_token;
-    // console.log(req.cookies.auth_token);
+    const {auth_token: authToken, refresh_token: refreshToken} = req.cookies;
 
-    if(!token) {
-        console.log('token not found!');
-        return res.json({tokenFound: false, err: 'Token not found!'});
-    }
+    console.log('authToken: ', authToken);
+    console.log('refreshToken: ', refreshToken);
     
-    try {
-        const verified = jwt.verify(req.cookies.auth_token, process.env.TOKEN_SECRET);
-        // console.log('verified value: ', verified);
+    // If refresh token isn't presented, redirect to login page
+    if(!refreshToken) {
+        console.log('No auth_token/refresh_token in request!');
+        return res.status(403).json({
+            redirect: '/loginForm.html',
+            message: "No auth/refresh_token found in request cookies. Please login again!",
+        });
+    } 
+    // If refresh token is presented
+    else {
 
-        User.findOne({_id: verified._id})
-        .then( res => {
-            // console.log('res: ', res);
-            return res;
-        })
-        .then( userData => {
-            const tokenFound = userData.issuedTokens.find( item => {
-                return item === req.cookies.auth_token;
+        let refreshTokenObject = await RefreshToken.findOne({token: refreshToken})
+
+        console.log({refreshToken: refreshTokenObject})
+
+        // If refresh token isn't found in DB, let the user know
+        if(!refreshTokenObject) {
+            res.status(403).json({message: 'Invalid refresh token!'});
+            return;
+        }
+
+        // If refresh token has expired, redirect to login page
+        if(RefreshToken.verifyExpiration(refreshTokenObject)) {
+            RefreshToken.findByIdAndRemove(refreshTokenObject._id, { useFindAndModify: false }).exec();
+
+            res.status(403).json({
+                redirect: '/loginForm.html',
+                message: "Refresh token expired. Please login again!",
             });
 
-            if(tokenFound)
-            {
-                console.log('token found in cloud: ', tokenFound);
+            return;
+        }
+
+        console.log('here@', authToken)
+        // If refresh token hasn't expired and is valid then check if auth token is valid or not
+        if(authToken) {
+            try {
+                let decodedToken = jwt.verify(authToken, process.env.TOKEN_SECRET);
+
+                let blacklistedTokens = await BlacklistAuthToken.find({blacklistedAuthToken: authToken});
+                
+                if (blacklistedTokens.length > 0) {
+                    
+                    res.status(403).json({
+                        redirect: '/loginForm.html',
+                        message: "Unauthorized! Please login again!",
+                    });
+                    
+                    return;
+                }
+                
+                console.log({decodedToken});
+                req.userId = decodedToken._id;
+                console.log("auth_token verified. Moving on...");
+                next();
+            } catch (TokenExpiredError) {
+                console.log('Token has expired. Checking if new token can be generated from supplied refresh_token...');
+                await generateNewAuthFromRefreshToken(req, res, refreshTokenObject);
                 next();
             }
-            else {
-                res.json({err: 'Invalid token please login again!'});
-            }
-        })
-        .catch( err => {
-            console.log('err: ', err);
-        });
+        }
 
-    } catch (error) {
-        res.status(400).send({tokenFound: true, err: error});
+        // Else auth token has expired but refresh token is still valid so generate a new auth token and extend expiry on refresh token
+        else {
+            await generateNewAuthFromRefreshToken(req, res, refreshTokenObject);
+            next();
+        }
     }
+}
+
+const generateNewAuthFromRefreshToken = async (req, res, refreshTokenObject) => {
+
+    console.log(refreshTokenObject);
+    let newAuthToken = jwt.sign({_id: refreshTokenObject.user}, process.env.TOKEN_SECRET, {expiresIn: process.env.TOKEN_TTL + 'ms'});
+    RefreshToken.extendExpiry(refreshTokenObject);
+
+    await RefreshToken.updateOne({_id: refreshTokenObject._id}, {$set: {expireTimestamp: refreshTokenObject.expireTimestamp + parseInt(process.env.REFRESH_TOKEN_TTL)}});
+
+    req.userId =  refreshTokenObject.user;
+
+    console.log('setting new cookies!');
+    console.log({newAuthToken})
+
+    res.cookie('auth_token', newAuthToken, {
+        maxAge: parseInt(process.env.TOKEN_TTL),
+        httpOnly: true,
+        sameSite: true,
+
+        //Disable secure for localhost and enable for production!
+        secure: isDevelopment ? false : true
+    })
+    .cookie('refresh_token', refreshTokenObject.token, {
+        // maxAge: parseInt(process.env.REFRESH_TOKEN_TTL),
+        httpOnly: true,
+        sameSite: true,
+
+        //Disable secure for localhost and enable for production!
+        secure: isDevelopment ? false : true
+    })
 }

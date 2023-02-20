@@ -216,6 +216,7 @@ function deletePane(paneRef) {
 }
 
 function isCollectionEmpty() {
+    console.log(_.isEmpty(getSavedLinks()));
     if(_.isEmpty(getSavedLinks()))
     {
         document.querySelector('.no-links-prompt').style.display = '';
@@ -564,37 +565,40 @@ window.onload = async () => {
 
     try {
         const response = await fetch('/get-data');
-        const userData = await response.json();
 
-        // Check if user is logged in
-        if(!userData.err) {
-            console.log('In if block!');
-            console.log('userData: ', userData);
+        if (response.status == 200) {
+            const userData = await response.json();
+            
+            // Check if user is logged in
+            if(!userData.err) {
+                console.log('In if block!');
+                console.log('userData: ', userData);
 
-            // Check if any value in local that doesn't match with cloud
-            let result = _.differenceBy(getSavedLinks(), userData.links, 'url');
+                // Check if any value in local that doesn't match with cloud
+                let result = _.differenceBy(getSavedLinks(), userData.links, 'url');
 
-            // Check if user has unsaved local links different from ones in the cloud
-            if(result.length !== 0)
-            {
-                console.log('diff result: ', result);
-                createSyncModal(result);
-            }
+                // Check if user has unsaved local links different from ones in the cloud
+                if(result.length !== 0)
+                {
+                    console.log('diff result: ', result);
+                    createSyncModal(result);
+                }
 
-            if(userData.links.length !== 0) {
-                console.log('after getting data!');
-                createPanes(userData.links);
-                collectionLoader.style.display = 'none';
-                localStorage.setItem('savedLinks', JSON.stringify(userData.links));
-                updateNoOfLinks();
-                isCollectionEmpty();
+                if(userData.links.length !== 0) {
+                    console.log('after getting data!');
+                    createPanes(userData.links);
+                    collectionLoader.style.display = 'none';
+                    localStorage.setItem('savedLinks', JSON.stringify(userData.links));
+                    updateNoOfLinks();
+                    isCollectionEmpty();
+                }
             }
         }
 
         // If user not logged in
         else {
             getSavedLinks();
-            console.log(userData.err);
+            // console.log(userData.err);
             updateNoOfLinks();
 
             if(!isCollectionEmpty())
